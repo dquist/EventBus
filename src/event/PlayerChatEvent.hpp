@@ -34,14 +34,12 @@ class PlayerChatEvent : public Event
 {
 public:
 	PlayerChatEvent(Object* sender, Player * const player, const std::string msg) :
-	Event(typeid(PlayerChatEvent), sender),
+	Event(sender),
 	player(player),
 	msg(msg) {
 	}
 
-	virtual ~PlayerChatEvent() {
-
-	}
+	virtual ~PlayerChatEvent() { }
 
 	Player * const getPlayer() {
 		return player;

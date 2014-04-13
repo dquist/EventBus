@@ -42,8 +42,7 @@ public:
 	 * @param typeIndex The type ID of the inherited class
 	 * @param sender The sender of the event
 	 */
-	Event(const std::type_index typeIndex, Object* const sender) :
-		typeIndex(typeIndex),
+	Event(Object* const sender) :
 		sender(sender),
 		canceled(false) {
 
@@ -99,11 +98,10 @@ public:
 	 * @return The type ID of this event class
 	 */
 	virtual std::type_index getType() {
-		return typeIndex;
+		return typeid(*this);
 	}
 
 private:
-	const std::type_index typeIndex;
 	Object* const sender;
 	bool canceled;
 
