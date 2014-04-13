@@ -31,14 +31,18 @@
 
 
 
+/**
+ * \brief Simple example of an event handler class
+ *
+ * This class shows how to implement an EventHandler and listen for events.
+ */
 class PlayerListener : public EventHandler<PlayerMoveEvent>
 {
 public:
-	PlayerListener() {
-
-	}
+	PlayerListener() { }
 
 	virtual ~PlayerListener() { }
+
 
 	/**
 	 * This event handler keeps the player inside a specific border area
@@ -77,17 +81,21 @@ public:
 	virtual ~EventBusDemo() { }
 
 
-
 	/**
 	 * Demo Function 1
 	 *
-	 * Registers an event listener on player1 and shows how it can cancel events
+	 * Registers an event listener on player1 and shows events can be fired and canceled
 	 */
 	void Demo1() {
 
 		// Two unique player objects
 		Player player1("Player1");
 		Player player2("Player2");
+
+		// Declare a local PlayerMoveEvent and use the event bus to fire it
+		// There are currently no listeners so this won't actually do anything
+		PlayerMoveEvent e(this, &player1, 0, 0, 0);
+		EventBus::FireEvent(e);
 
 		// Create the player listener instance
 		playerListener = new PlayerListener();
@@ -102,6 +110,8 @@ public:
 
 		// This loop will attempt to increase the X position of player one
 		// by 200 until it reaches 1000 or if the setPosition function fails.
+
+		// The Player.setPosition() method fires a PlayerMoveEvent event internally
 		//
 		// The PlayerListener class has an event handler that will cancel the
 		// PlayerMoveEvent if the X position is greater than 500

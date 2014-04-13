@@ -29,20 +29,14 @@
 #include "HandlerRegistration.hpp"
 
 #include <list>
-#include <functional>
-#include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
 
 #include "boost/any.hpp"
-#include "boost/function.hpp"
-
 
 
 /**
  * \brief An Event system that allows decoupling of code through synchronous events
- *
- *
  *
  */
 class EventBus : public Object {
