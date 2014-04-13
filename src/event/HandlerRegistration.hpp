@@ -25,6 +25,9 @@
 
 #include "Object.hpp"
 
+/**
+ * \brief Interface that that allows event handlers to be removed from the EventBus
+ */
 class HandlerRegistration : public Object {
 public:
 	virtual ~HandlerRegistration() { }

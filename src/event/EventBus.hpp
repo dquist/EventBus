@@ -43,18 +43,30 @@
  * \brief An Event system that allows decoupling of code through synchronous events
  *
  *
+ *
  */
 class EventBus : public Object {
 public:
-	EventBus() {
+	/**
+	 * \brief Default empty constructor
+	 */
+	EventBus() { }
 
-	}
 
-	virtual ~EventBus() {
+	/**
+	 * \brief Empty virtual destructor
+	 */
+	virtual ~EventBus() { }
 
-	}
 
-	static EventBus* GetInstance() {
+	/**
+	 * \brief Returns the EventBus singleton instance
+	 *
+	 * Creates a new instance of the EventBus if hasn't already been created
+	 *
+	 * @return The singleton instance
+	 */
+	static EventBus* const GetInstance() {
 		if (instance == nullptr) {
 			instance = new EventBus();
 		}
@@ -62,41 +74,72 @@ public:
 		return instance;
 	}
 
+
+	/**
+	 * \brief Registers a new event handler to the EventBus with a source specifier
+	 *
+	 * The template parameter is the specific type of event that is being added. Since a class can
+	 * potentially inherit multiple event handlers, the template specifier will remove any ambiguity
+	 * as to which handler pointer is being referenced.
+	 *
+	 * @param handler The event handler class
+	 * @param sender The source sender object
+	 * @return An EventRegistration pointer which can be used to unregister the event handler
+	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>* handler) {
+	static HandlerRegistration* const AddHandler(EventHandler<T>* const handler, Object* const sender) {
+		EventBus* instance = GetInstance();
+
+		// Fetch the list of event pairs unique to this event type
+		Registrations* registrations = instance->handlers[typeid(T)];
+
+		// Create a new collection instance for this type if it hasn't been created yet
+		if (registrations == nullptr) {
+			registrations = new Registrations();
+			instance->handlers[typeid(T)] = registrations;
+		}
+
+		// Create a new EventPair instance for this registration.
+		// This will group the handler, sender, and registration object into the same class
+		EventRegistration* registration = new EventRegistration(handler, registrations, sender);
+
+		// Add the registration object to the collection
+		registrations->push_back(registration);
+
+		return registration;
+	}
+
+
+	/**
+	 * \brief Registers a new event handler to the EventBus with no source specified
+	 *
+	 * @param handler The event handler class
+	 * @return An EventRegistration pointer which can be used to unregister the event handler
+	 */
+	template <class T>
+	static HandlerRegistration* const AddHandler(EventHandler<T>* const handler) {
 		return AddHandler<T>(handler, nullptr);
 	}
 
-	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>* handler, Object* sender) {
-		EventBus* instance = GetInstance();
 
-		EventPairs* eventPairs = instance->handlers[typeid(T)];
-
-		if (eventPairs == nullptr) {
-			eventPairs = new EventPairs();
-			instance->handlers[typeid(T)] = eventPairs;
-		}
-
-
-		EventPair* pair = new EventPair(handler, eventPairs, sender);
-
-		eventPairs->push_back(pair);
-
-		return pair;
-	}
-
-
+	/**
+	 * \brief Fires an event
+	 *
+	 * @param e The event to fire
+	 */
 	static void FireEvent(Event & e) {
 		EventBus* instance = GetInstance();
 
-		EventPairs* eventpairs = instance->handlers[e.getType()];
+		Registrations* registrations = instance->handlers[e.getType()];
 
-		if (eventpairs == nullptr) {
-			return; // No registered handlers for this event type
+		// If the registrations list is null, then no handlers have been registered for this event
+		if (registrations == nullptr) {
+			return;
 		}
 
-		for (auto & pair : *eventpairs) {
+		// Iterate through all the registered handlers and dispatch to each one if the sender
+		// matches the source or if the sender is not specified
+		for (auto & pair : *registrations) {
 			if ((pair->getSender() == nullptr) || (pair->getSender() == e.getSender())) {
 				e.handleEvent(pair->getHandler());
 			}
@@ -106,38 +149,81 @@ public:
 private:
 	static EventBus* instance;
 
-	class EventPair : public HandlerRegistration
+
+	/**
+	 * \brief Private registration class for registered event handlers
+	 */
+	class EventRegistration : public HandlerRegistration
 	{
 	public:
-		typedef std::list<EventPair*> EventPairs;
+		typedef std::list<EventRegistration*> Registrations;
 
-		EventPair(const boost::any handler, EventPairs * const registrations, Object * const sender ) :
+
+		/**
+		 * \brief Represents a registration object for a registered event handler
+		 *
+		 * This object is stored in a collection with other handlers for the event type.
+		 *
+		 * @param handler The event handler
+		 * @param registrations The handler collection for this event type
+		 * @param sender The registered sender object
+		 */
+		EventRegistration(const boost::any handler, Registrations * const registrations, Object * const sender ) :
 			handler(handler),
-			eventPairs(registrations),
+			registrations(registrations),
 			sender(sender),
 			registered(true)
 		{ }
 
-		boost::any getHandler() { return handler; }
-		Object* const getSender() { return sender; }
 
+		/**
+		 * \brief Empty virtual destructor
+		 */
+		virtual ~EventRegistration() { }
+
+
+		/**
+		 * \brief Gets the event handler for this registration
+		 *
+		 * @return The event handler
+		 */
+		boost::any getHandler() {
+			return handler;
+		}
+
+
+		/**
+		 * \brief Gets the sender object for this registration
+		 *
+		 * @return The registered sender object
+		 */
+		Object* const getSender() {
+			return sender;
+		}
+
+
+		/**
+		 * \brief Removes an event handler from the registration collection
+		 *
+		 * The event handler will no longer receive events for this event type
+		 */
 		virtual void removeHandler() {
 			if (registered) {
-				eventPairs->remove(this);
+				registrations->remove(this);
 				registered = false;
 			}
 		}
 
 	private:
 		const boost::any handler;
-		EventPairs* const eventPairs;
+		Registrations* const registrations;
 		Object* const sender;
 
 		bool registered;
 	};
 
-	typedef std::list<EventPair*> EventPairs;
-	typedef std::unordered_map<std::type_index, std::list<EventPair*>*> TypeMap;
+	typedef std::list<EventRegistration*> Registrations;
+	typedef std::unordered_map<std::type_index, std::list<EventRegistration*>*> TypeMap;
 
 	TypeMap handlers;
 

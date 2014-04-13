@@ -145,7 +145,7 @@ private:
 
 int main()
 {
-	printf("Hello world!\n");
+	printf("* * * EventBus Demo Program * * * \n");
 
 	try
 	{

@@ -20,14 +20,16 @@
  * THE SOFTWARE.
  */
 
-#include "Object.hpp"
-#include <typeindex>
-#include <typeinfo>
-#include <boost/any.hpp>
-#include <vector>
-
 #ifndef _SRC_EVENT_EVENT_HPP_
 #define _SRC_EVENT_EVENT_HPP_
+
+#include "Object.hpp"
+
+#include <typeindex>
+#include <typeinfo>
+#include <vector>
+
+#include <boost/any.hpp>
 
 /**
  * \brief The base event class, all events inherit from this class
@@ -35,7 +37,13 @@
 class Event : public Object
 {
 public:
-	Event(std::type_index typeIndex, Object* const sender) :
+	/**
+	 * \brief Default constructor
+	 *
+	 * @param typeIndex The type ID of the inherited class
+	 * @param sender The sender of the event
+	 */
+	Event(const std::type_index typeIndex, Object* const sender) :
 		typeIndex(typeIndex),
 		sender(sender),
 		canceled(false) {
@@ -46,34 +54,68 @@ public:
 		}
 	}
 
+	/**
+	 * \brief Empty virtual destructor
+	 */
 	virtual ~Event() { }
 
+
+	/**
+	 * \brief Gets the source object for this event
+	 *
+	 * @return The event sender
+	 */
 	Object* const getSender() {
 		return sender;
 	}
 
+
+	/**
+	 * \brief Gets whether the event has been canceled
+	 *
+	 * @return true if the event is canceled
+	 */
 	bool getCanceled() {
 		return canceled;
 	}
 
 
+	/**
+	 * \brief Sets the canceled status for the event
+	 *
+	 * @param canceled Whether the even is canceled or not
+	 */
 	void setCanceled(bool canceled) {
 		this->canceled = canceled;
 	}
 
+
+	/**
+	 * \brief Gets the type ID of the derived base class
+	 *
+	 * When the event gets fired this value is used to do a lookup in the EventBus
+	 * to get the collection of handlers specific to this event type
+	 *
+	 * @return The type ID of this event class
+	 */
 	virtual std::type_index getType() {
 		return typeIndex;
 	}
 
+	/**
+	 * \brief Pure virtual function to handle this event
+	 *
+	 * This method needs to be implemented for each event class
+	 *
+	 * @param handler The event handler
+	 */
 	virtual void handleEvent(boost::any handler) = 0;
 
 private:
-	std::type_index typeIndex;
+	const std::type_index typeIndex;
 	Object* const sender;
 	bool canceled;
 
 };
-
-
 
 #endif /* _SRC_EVENT_EVENT_HPP_ */

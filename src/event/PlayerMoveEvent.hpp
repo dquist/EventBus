@@ -26,8 +26,14 @@
 #include "Event.hpp"
 #include <string>
 
+// Forward declare Player class
 class Player;
 
+/**
+ * \brief Example event class to showcase some of the features of the EventBus
+ *
+ * This is not part of the core functionality and can be modified or deleted as desired
+ */
 class PlayerMoveEvent : public Event
 {
 public:
