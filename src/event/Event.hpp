@@ -24,7 +24,6 @@
 #define _SRC_EVENT_EVENT_HPP_
 
 #include "Object.hpp"
-#include "EventHandler.hpp"
 
 #include <typeindex>
 #include <typeinfo>
