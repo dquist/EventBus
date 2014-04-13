@@ -24,12 +24,12 @@
 #define _SRC_EVENT_EVENT_HPP_
 
 #include "Object.hpp"
+#include "EventHandler.hpp"
 
 #include <typeindex>
 #include <typeinfo>
 #include <vector>
-
-#include <boost/any.hpp>
+#include <stdexcept>
 
 /**
  * \brief The base event class, all events inherit from this class
@@ -53,6 +53,7 @@ public:
 			throw std::runtime_error("Event parameter 'sender' was null.\n");
 		}
 	}
+
 
 	/**
 	 * \brief Empty virtual destructor
@@ -101,15 +102,6 @@ public:
 	virtual std::type_index getType() {
 		return typeIndex;
 	}
-
-	/**
-	 * \brief Pure virtual function to handle this event
-	 *
-	 * This method needs to be implemented for each event class
-	 *
-	 * @param handler The event handler
-	 */
-	virtual void handleEvent(boost::any handler) = 0;
 
 private:
 	const std::type_index typeIndex;

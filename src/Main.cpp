@@ -22,8 +22,10 @@
 
 #include "EventHandler.hpp"
 #include "EventBus.hpp"
-#include "PlayerMoveEvent.hpp"
 #include "Player.hpp"
+
+#include "PlayerMoveEvent.hpp"
+#include "PlayerChatEvent.hpp"
 
 #include <cstdio>
 #include <string>
@@ -34,9 +36,9 @@
 /**
  * \brief Simple example of an event handler class
  *
- * This class shows how to implement an EventHandler and listen for events.
+ * This snippet shows how to implement multiple EventHandlers in a single class
  */
-class PlayerListener : public EventHandler<PlayerMoveEvent>
+class PlayerListener : public EventHandler<PlayerMoveEvent>, public EventHandler<PlayerChatEvent>
 {
 public:
 	PlayerListener() { }
@@ -45,11 +47,17 @@ public:
 
 
 	/**
-	 * This event handler keeps the player inside a specific border area
+	 * \brief This event handler keeps the player inside a specific border area
 	 *
 	 * @param e The PlayerMoveEvent event
 	 */
 	virtual void onEvent(PlayerMoveEvent* e) override {
+
+		// Ignore the event if it's already been canceled
+		if (e->getCanceled()) {
+			return;
+		}
+
 		Player* p = e->getPlayer();
 
 		// Cancel the event if the new player position is outside of the border area
@@ -58,6 +66,22 @@ public:
 			printf("Canceled setting player %s position - outside of border\n", p->getName().c_str());
 			return;
 		}
+	}
+
+
+	/**
+	 * This event handler prints out a debug message whenever a chat event is fired
+	 *
+	 * @param e The PlayerChatEvent event
+	 */
+	virtual void onEvent(PlayerChatEvent* e) override {
+
+		// Ignore the event if it's already been canceled
+		if (e->getCanceled()) {
+			return;
+		}
+
+		printf("The player '%s' said: %s\n", e->getPlayer()->getName().c_str(), e->getMessage().c_str());
 	}
 
 private:
@@ -75,7 +99,8 @@ class EventBusDemo : public Object
 public:
 	EventBusDemo() {
 		playerListener = nullptr;
-		playerListenerReg = nullptr;
+		playerMoveReg = nullptr;
+		playerChatReg = nullptr;
 	}
 
 	virtual ~EventBusDemo() { }
@@ -103,8 +128,11 @@ public:
 		// Register the player listener to listen for PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
 		// The return value is a HandlerRegistration pointer that can be used to unregister the event listener
-		// Alternatively, you could have it listen for ALL players by omitting the second parameter
-		playerListenerReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, &player1);
+		playerMoveReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, &player1);
+
+		// The playerListener gets registered again, but this time as player chat event listener
+		// The lack of a second parameter means that it will not discriminate based on the source of the event
+		playerChatReg = EventBus::AddHandler<PlayerChatEvent>(playerListener);
 
 		int x = 0;
 
@@ -140,15 +168,37 @@ public:
 			}
 		}
 
+
+		// Here two chat player chat events are created for each player and fired.
+		// Since the chat listener was registered without a source object, it will service
+		// all chat events and print both messages
+		PlayerChatEvent chat1(this, &player1, "Hello I am Player 1!");
+		EventBus::FireEvent(chat1);
+
+		PlayerChatEvent chat2(this, &player2, "Hello I am Player 2!");
+		EventBus::FireEvent(chat2);
+
+
+		// The HandlerRegistration object can be used to unregister the event listener
+		playerChatReg->removeHandler();
+
+
+		// If a chat event is fired again, it will not be serviced since the handler has been unregistered
+		PlayerChatEvent chat3(this, &player2, "This chat message will not be serviced");
+		EventBus::FireEvent(chat3);
+
+
 		// Clean up
-		playerListenerReg->removeHandler();
-		delete playerListenerReg;
+		playerMoveReg->removeHandler();
+		delete playerMoveReg;
+		delete playerChatReg;
 		delete playerListener;
 	}
 
 private:
 	PlayerListener* playerListener;
-	HandlerRegistration* playerListenerReg;
+	HandlerRegistration* playerMoveReg;
+	HandlerRegistration* playerChatReg;
 
 };
 

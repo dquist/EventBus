@@ -24,11 +24,14 @@
 #define _SRC_EVENT_EVENT_HANDLER_HPP_
 
 #include "Object.hpp"
+
 #include <typeinfo>
-#include "Event.hpp"
+
+// Forward declare the Event class
+class Event;
 
 /**
- * \brief Base class for all classes that listen for events
+ * \brief Base class of all classes that listen for events
  *
  * For a class to be an event listener, it needs to inherit from EventHandler
  * with the specific event type as the template parameter. A class can inherit from
@@ -64,7 +67,7 @@ public:
 	 * This method is called by the EventBus and dispatches to the correct method by
 	 * dynamic casting the event parameter to the template type for this handler.
 	 *
-	 * @param e The event
+	 * @param e The event to dispatch
 	 */
 	void dispatch(Event* e) {
 		onEvent(dynamic_cast<T*>(e));

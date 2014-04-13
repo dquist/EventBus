@@ -32,8 +32,6 @@
 #include <typeinfo>
 #include <unordered_map>
 
-#include "boost/any.hpp"
-
 
 /**
  * \brief An Event system that allows decoupling of code through synchronous events
@@ -95,7 +93,7 @@ public:
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-		EventRegistration* registration = new EventRegistration(handler, registrations, sender);
+		EventRegistration* registration = new EventRegistration(static_cast<void*>(handler), registrations, sender);
 
 		// Add the registration object to the collection
 		registrations->push_back(registration);
@@ -133,19 +131,25 @@ public:
 
 		// Iterate through all the registered handlers and dispatch to each one if the sender
 		// matches the source or if the sender is not specified
-		for (auto & pair : *registrations) {
-			if ((pair->getSender() == nullptr) || (pair->getSender() == e.getSender())) {
-				e.handleEvent(pair->getHandler());
+		for (auto & reg : *registrations) {
+			if ((reg->getSender() == nullptr) || (reg->getSender() == e.getSender())) {
+
+				// This is where some magic happens. The void * handler is statically cast to an event handler
+				// of generic type Event and dispatched. The dispatch function will then do a dynamic
+				// cast to the correct event type so the matching onEvent method can be called
+				static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(&e);
 			}
 		}
 	}
 
+
 private:
+	// Singleton class instance
 	static EventBus* instance;
 
 
 	/**
-	 * \brief Private registration class for registered event handlers
+	 * \brief Registration class private to EventBus for registered event handlers
 	 */
 	class EventRegistration : public HandlerRegistration
 	{
@@ -162,7 +166,7 @@ private:
 		 * @param registrations The handler collection for this event type
 		 * @param sender The registered sender object
 		 */
-		EventRegistration(const boost::any handler, Registrations * const registrations, Object * const sender ) :
+		EventRegistration(void * const handler, Registrations * const registrations, Object * const sender ) :
 			handler(handler),
 			registrations(registrations),
 			sender(sender),
@@ -181,7 +185,7 @@ private:
 		 *
 		 * @return The event handler
 		 */
-		boost::any getHandler() {
+		void * const getHandler() {
 			return handler;
 		}
 
@@ -209,7 +213,7 @@ private:
 		}
 
 	private:
-		const boost::any handler;
+		void * const handler;
 		Registrations* const registrations;
 		Object* const sender;
 
