@@ -1,6 +1,6 @@
 # C++11 EventBus
 
-A lightweight synchronous event framework for C++11
+**A lightweight synchronous event framework for C++11**
 
 ## Overview
 Like many other event frameworks, this project allows you to reduce dependencies and decouple your C++11 code by leveraging synchronous events and event handlers.
