@@ -1,18 +1,15 @@
 C++11 EventBus
 ========
 
-An synchronous event system for C++11
+A lightweight synchronous event framework for C++11
 
 Overview
 -----
 
 Like many other event frameworks, this project allows you to reduce dependencies and decouple your C++11 code by leveraging synchronous events and event handlers.
 
-Unlike mananged languages C# and Java, C++ is statically typed and doesn't support reflection making event systems slightly more difficult. This project attempts to create a simple event framework that can be applied to any C++11 project that includes boost.
+Unlike mananged languages such as C# and Java, C++ is statically typed and doesn't support reflection or anonymous delegates making event systems slightly more difficult. This project attempts to create a simple and lightweight event framework that can easily be adapted to any C++11 project. The only requirements are a compiler that supports C++11 and access to the standard C++ libraries.
 
+The framework can be dropped into any existing project as is without any modification or can be easily modified to fit an existing design. One example of a common tweak maybe be replace the included Object base class with another base class that is common to the project. The EventBus requires that all events be fired from an Object type which could be replaced by an already existing class in your project.
 
-More Details
------------
-**Requirements**
-* Compiler that supports C++11
-* Boost
+The EventBus does perform a few 'unsafe' operations by statically casting to and from void *. This was originally done using the boost::any library to avoid static casting but was changed to void * in the interest of making the project faster and more portable. There are many projects that don't use Boost, and the casts are protected through the use of templates which remove the possibility of incorrect cast.
