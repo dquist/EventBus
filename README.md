@@ -13,6 +13,6 @@ The files can be dropped into any existing project as is without any modificatio
 
 The EventBus does perform a few 'unsafe' operations by statically casting to and from void *. This was originally done using the boost::any library to avoid static casting but was changed to void * in the interest of making runtime speed faster and the code more portable. There are many projects that don't include Boost, and the casts are protected through the use of templates which remove the possibility of an incorrect cast.
 
-Useage
+Usage
 ------
 
