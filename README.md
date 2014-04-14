@@ -43,7 +43,7 @@ The PlayerChatEvent takes three parameters: the event sender or source, a refere
 
 ### Creating an Event Handler
 
-For events to be useful there must be something listening for the events that get fired; that's where the EventHandler class comes in. To listen for a particular event, you must have a class that inherits from the EventHandler class and implements the virtual method for that event type. Below is a class that can handle player chat events.
+For events to be useful there must be something listening for the events that get fired; that's where the *EventHandler* class comes in. To listen for a particular event, you must have a class that inherits from the *EventHandler* class and implements the virtual method for that event type. Below is a class that will listen for player chat events and print out the chat message with the player name.
 
 ```c++
 class PlayerListener : public EventHandler<PlayerChatEvent>
