@@ -51,9 +51,9 @@ For events to be useful there must be something listening for the events that ge
         std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
     }
 
-The first point is that the *PlayerListener* class inherits from *EventHandler* and uses the template parameter of the player chat event which is the event type that it will listen for. *EventHandler* is a template class and must always be qualified with the type of event that is being targeted. This makes it possible for a single class to listen for multiple events. The class simply needs to inherit from *EventHandler* multiple times, each with a different template parameter.
+The *PlayerListener* class inherits from *EventHandler* and uses the template parameter of the player chat event. This is the event type that it will listen for. *EventHandler* is a template class and must always be qualified with the type of event that is being targeted. This makes it possible for a single class to listen for multiple events. The class simply needs to inherit from *EventHandler* multiple times, each with a different template parameter.
 
-The second point is the virtual function. All event handler functions must be called *onEvent* with a single parameter that is a pointer to the event type. The *override* keyword is introduced in C++11 and tells the compiler that you are intending to override a virtual function and will throw an error if the function signature does not match an existing virtual function.
+All event handler functions must be virtual and called *onEvent* with a single parameter - a pointer to the handled event type. The *override* keyword is new in C++11 and tells the compiler that it intends to override an existing virtual function. The compiler will throw an error if the function signature does not match an existing virtual function from an inherited class.
 
 ### Registering and Unregistering an Event Handler
 
@@ -61,9 +61,14 @@ The last part is to register the event handler with the event bus using the *Add
 
     // Create an instance of PlayerListener and register it with the event bus
     PlayerListener* pListener = new PlayerListener();
-    EventBus::AddHandler<PlayerChatEvent>(pListener);
+    HandlerRegistration* reg = EventBus::AddHandler<PlayerChatEvent>(pListener);
     
 Now the pListener object has been registered and the *onEvent* will be invoked every time a player chat event is fired. The template parameter is again necessary so that the same listener class can be registered as multiple event handlers; this removes any ambiguity as to which base class is being referenced.
+
+The registered class can also be unregistered by using the returned *HandlerRegistration* object. Once a handler is unregistered, it will no longer recieve events of that type.
+
+    reg->removeHandler();
+    delete reg;
 
 The *AddHandler* method also has an optional 2nd parameter that can specify a desired event source. Providing an event source during registration means that event handler will only be invoked when the event is fired from that specified source object.
 
