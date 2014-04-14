@@ -31,7 +31,7 @@ These are included for example only and can be deleted when using the framework.
 ## Usage
 ### Firing an Event
 
-The event bus is designed so that each event type is a unique class that inherits from the *Event* base class. This means that each application will need to create the event classes that are desired. There are two example event classes included in the project, *PlayerChatEvent* and *PlayerMoveEvent*. These are two events that you might commonly see in game development framework. Below you can observe the syntax for creating and firing a player chat event.
+The event bus is designed so that each event type is a unique class that inherits from the *Event* base class. This means that you will need to create the event classes that are specific to your application. There are two example event classes included in the project, *PlayerChatEvent* and *PlayerMoveEvent*. These are two events that you might commonly see in a game development framework. Below you can observe the syntax for creating and firing a player chat event.
 
 ```c++
 Player player1("Player 1", 0, 0, 0); // Player instance with a name and default position
@@ -39,7 +39,7 @@ PlayerChatEvent e(this, &player1, "This is a chat message"); // Create the event
 EventBus::FireEvent(e); // Fire the event
 ```
 
-The PlayerChatEvent takes three parameters: the event sender or source, a reference to the player that is chatting, and then the message text. The act of firing an event is simply to declare an event object and pass it to the static *FireEvent* method. When *FireEvent* is called, it will service all the event handlers for that event type before returning. This synchronous event-based programming is extremely useful in decoupling inter-class dependencies in large code bases
+The PlayerChatEvent takes three parameters: the event sender or source, a reference to the player that is chatting, and then the message text. The act of firing an event is simply to declare an event object and pass it to the static *FireEvent* method. When *FireEvent* is called, it will service all the event handlers for that event type before returning. This synchronous event-based programming is extremely useful in decoupling inter-class dependencies in large code bases.
 
 ### Creating an Event Handler
 
@@ -82,21 +82,21 @@ The *AddHandler* method also has an optional 2nd parameter that can specify a de
 
 ### Creating a Custom Event
 
-Creating new event classes is easy; just make a new class, inherit from the base *Event* class, implement the constructor and add custom fields and methods. This is what an empty event class looks like without any custom fields or methods.
+Creating new event classes is easy - just make a new class that inherits from the base *Event* class, implement the constructor and add custom fields and methods. This is what an empty event class looks like without any custom fields or methods.
 
 ```c++
-class EmptyEvent : public Event
+class MyCustomEvent : public Event
 {
 public:
-  EmtpyEvent(Object * const sender) :
+  MyCustomEvent(Object * const sender) :
   Event(sender) {
   }
   
-  virtual ~EmptyEvent() { }
+  virtual ~MyCustomEvent() { }
 };
 ```
 
-The constructor for the *Event* base class requires the event sender as a parameter, so at most all the events must have at least one parameter. Beyond this shell class, any custom fields or methods can be added as desired. 
+The constructor for the *Event* base class requires the event sender as a parameter, so at most your event must have at least one parameter. Beyond this shell class, any custom fields or methods can be added as desired. 
 
 
 ## Conclusion
