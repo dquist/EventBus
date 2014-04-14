@@ -52,7 +52,8 @@ public:
   virtual void onEvent(PlayerChatEvent* e) override {
     // Print out the name of the player and the chat message
     std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
-}
+    }
+};
 ```
 
 The *PlayerListener* class inherits from *EventHandler* and uses the template parameter of the player chat event. This is the event type that it will listen for. *EventHandler* is a template class and must always be qualified with the type of event that is being targeted. This makes it possible for a single class to listen for multiple events. The class simply needs to inherit from *EventHandler* multiple times, each with a different template parameter.
