@@ -3,7 +3,7 @@
 **A lightweight synchronous event framework for C++11**
 
 ## Overview
-Like many other event frameworks, this project allows you to reduce dependencies and decouple your C++11 code by leveraging synchronous events and event handlers.
+Like many other event frameworks, this project allows you to reduce inter-class dependencies and decouple your C++11 code by leveraging synchronous events and event handlers.
 
 Unlike managed languages such as C# and Java, C++ is statically typed and doesn't support reflection or anonymous delegates making event systems slightly more difficult. This project attempts to create a simple and lightweight event framework that can easily be adapted to any C++11 project. The only requirements are a compiler that supports C++11 and access to the standard C++ libraries. It was inspired by the design of several public event APIs such as in Google's Web Toolkit and those found in popular game modding frameworks.
 
