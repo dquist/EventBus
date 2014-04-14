@@ -88,19 +88,6 @@ public:
 		this->canceled = canceled;
 	}
 
-
-	/**
-	 * \brief Gets the type ID of the derived base class
-	 *
-	 * When the event gets fired this value is used to do a lookup in the EventBus
-	 * to get the collection of handlers specific to this event type
-	 *
-	 * @return The type ID of this event class
-	 */
-	virtual std::type_index getType() {
-		return typeid(*this);
-	}
-
 private:
 	Object* const sender;
 	bool canceled;

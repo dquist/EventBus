@@ -122,7 +122,7 @@ public:
 	static void FireEvent(Event & e) {
 		EventBus* instance = GetInstance();
 
-		Registrations* registrations = instance->handlers[e.getType()];
+		Registrations* registrations = instance->handlers[typeid(e)];
 
 		// If the registrations list is null, then no handlers have been registered for this event
 		if (registrations == nullptr) {
