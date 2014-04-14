@@ -34,7 +34,7 @@ These are included for example only and can be deleted when using the framework.
 The event bus is designed so that each event type is a unique class that inherits from the *Event* base class. This means that you will need to create the event classes that are specific to your application. There are two example event classes included in the project, *PlayerChatEvent* and *PlayerMoveEvent*. These are two events that you might commonly see in a game development framework. Below you can observe the syntax for creating and firing a player chat event.
 
 ```c++
-Player player1("Player 1", 0, 0, 0); // Player instance with a name and default position
+Player player1("Player 1"); // Player instance with a name
 PlayerChatEvent e(this, &player1, "This is a chat message"); // Create the event object
 EventBus::FireEvent(e); // Fire the event
 ```
@@ -52,7 +52,7 @@ public:
   virtual void onEvent(PlayerChatEvent* e) override {
     // Print out the name of the player and the chat message
     std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
-    }
+  }
 };
 ```
 
