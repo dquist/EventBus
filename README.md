@@ -33,23 +33,27 @@ These are included for example only and can be deleted when using the framework.
 
 The event bus is designed so that each event type is a unique class that inherits from the *Event* base class. This means that each application will need to create the event classes that are desired. There are two example event classes included in the project, *PlayerChatEvent* and *PlayerMoveEvent*. These are two events that you might commonly see in game development framework. Below you can observe the syntax for creating and firing a player chat event.
 
-    Player player1("Player 1", 0, 0, 0); // Player instance with a name and default position
-    PlayerChatEvent e(this, &player1, "This is a chat message"); // Create the event object
-    EventBus::FireEvent(e); // Fire the event
-    
+```c++
+Player player1("Player 1", 0, 0, 0); // Player instance with a name and default position
+PlayerChatEvent e(this, &player1, "This is a chat message"); // Create the event object
+EventBus::FireEvent(e); // Fire the event
+```
+
 The PlayerChatEvent takes three parameters: the event sender or source, a reference to the player that is chatting, and then the message text. The act of firing an event is simply to declare an event object and pass it to the static *FireEvent* method. When *FireEvent* is called, it will service all the event handlers for that event type before returning. This synchronous event-based programming is extremely useful in decoupling inter-class dependencies in large code bases
 
 ### Creating an Event Handler
 
 For events to be useful there must be something listening for the events that get fired; that's where the EventHandler class comes in. To listen for a particular event, you must have a class that inherits from the EventHandler class and implements the virtual method for that event type. Below is a class that can handle player chat events.
 
-    class PlayerListener : public EventHandler<PlayerChatEvent>
-    {
-    public:
-      virtual void onEvent(PlayerChatEvent* e) override {
-        // Print out the name of the player and the chat message
-        std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
-    }
+```c++
+class PlayerListener : public EventHandler<PlayerChatEvent>
+{
+public:
+  virtual void onEvent(PlayerChatEvent* e) override {
+    // Print out the name of the player and the chat message
+    std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
+}
+```
 
 The *PlayerListener* class inherits from *EventHandler* and uses the template parameter of the player chat event. This is the event type that it will listen for. *EventHandler* is a template class and must always be qualified with the type of event that is being targeted. This makes it possible for a single class to listen for multiple events. The class simply needs to inherit from *EventHandler* multiple times, each with a different template parameter.
 
@@ -59,16 +63,20 @@ All event handler functions must be virtual and called *onEvent* with a single p
 
 The last part is to register the event handler with the event bus using the *AddHandler* method as you can see below.
 
-    // Create an instance of PlayerListener and register it with the event bus
-    PlayerListener* pListener = new PlayerListener();
-    HandlerRegistration* reg = EventBus::AddHandler<PlayerChatEvent>(pListener);
+```c++
+// Create an instance of PlayerListener and register it with the event bus
+PlayerListener* pListener = new PlayerListener();
+HandlerRegistration* reg = EventBus::AddHandler<PlayerChatEvent>(pListener);
+```
     
 Now the pListener object has been registered and the *onEvent* will be invoked every time a player chat event is fired. The template parameter is again necessary so that the same listener class can be registered as multiple event handlers; this removes any ambiguity as to which base class is being referenced.
 
 The registered class can also be unregistered by using the returned *HandlerRegistration* object. Once a handler is unregistered, it will no longer recieve events of that type.
 
-    reg->removeHandler();
-    delete reg;
+```c++
+reg->removeHandler();
+delete reg;
+```
 
 The *AddHandler* method also has an optional 2nd parameter that can specify a desired event source. Providing an event source during registration means that event handler will only be invoked when the event is fired from that specified source object.
 
@@ -76,15 +84,17 @@ The *AddHandler* method also has an optional 2nd parameter that can specify a de
 
 Creating new event classes is easy; just make a new class, inherit from the base *Event* class, implement the constructor and add custom fields and methods. This is what an empty event class looks like without any custom fields or methods.
 
-    class EmptyEvent : public Event
-    {
-    public:
-      EmtpyEvent(Object * const sender) :
-      Event(sender) {
-      }
-      
-      virtual ~EmptyEvent() { }
-    };
+```c++
+class EmptyEvent : public Event
+{
+public:
+  EmtpyEvent(Object * const sender) :
+  Event(sender) {
+  }
+  
+  virtual ~EmptyEvent() { }
+};
+```
 
 The constructor for the *Event* base class requires the event sender as a parameter, so at most all the events must have at least one parameter. Beyond this shell class, any custom fields or methods can be added as desired. 
 
