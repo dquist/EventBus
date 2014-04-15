@@ -79,7 +79,7 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>* const handler, Object & sender) {
+	static HandlerRegistration* const AddHandler(EventHandler<T> & handler, Object & sender) {
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
@@ -93,7 +93,7 @@ public:
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-		EventRegistration* registration = new EventRegistration(static_cast<void*>(handler), registrations, &sender);
+		EventRegistration* registration = new EventRegistration(static_cast<void*>(&handler), registrations, &sender);
 
 		// Add the registration object to the collection
 		registrations->push_back(registration);
@@ -109,7 +109,7 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>* const handler) {
+	static HandlerRegistration* const AddHandler(EventHandler<T> & handler) {
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
@@ -123,7 +123,7 @@ public:
 
 		// Create a new EventPair instance for this registration.
 		// This will group the handler, sender, and registration object into the same class
-		EventRegistration* registration = new EventRegistration(static_cast<void*>(handler), registrations, nullptr);
+		EventRegistration* registration = new EventRegistration(static_cast<void*>(&handler), registrations, nullptr);
 
 		// Add the registration object to the collection
 		registrations->push_back(registration);

@@ -98,7 +98,6 @@ class EventBusDemo : public Object
 {
 public:
 	EventBusDemo() {
-		playerListener = nullptr;
 		playerMoveReg = nullptr;
 		playerChatReg = nullptr;
 	}
@@ -123,7 +122,7 @@ public:
 		EventBus::FireEvent(e);
 
 		// Create the player listener instance
-		playerListener = new PlayerListener();
+		PlayerListener playerListener;
 
 		// Register the player listener to handler PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
@@ -200,11 +199,9 @@ public:
 		playerMoveReg->removeHandler();
 		delete playerMoveReg;
 		delete playerChatReg;
-		delete playerListener;
 	}
 
 private:
-	PlayerListener* playerListener;
 	HandlerRegistration* playerMoveReg;
 	HandlerRegistration* playerChatReg;
 
