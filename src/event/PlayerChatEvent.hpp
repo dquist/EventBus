@@ -24,16 +24,14 @@
 #define _SRC_EVENT_PLAYER_CHAT_EVENT_HPP_
 
 #include "Event.hpp"
+#include "Player.hpp"
 
 #include <string>
-
-// Forward declare Player class
-class Player;
 
 class PlayerChatEvent : public Event
 {
 public:
-	PlayerChatEvent(Object & sender, Player * const player, const std::string msg) :
+	PlayerChatEvent(Object & sender, Player & player, std::string const & msg) :
 	Event(sender),
 	player(player),
 	msg(msg) {
@@ -41,17 +39,17 @@ public:
 
 	virtual ~PlayerChatEvent() { }
 
-	Player * const getPlayer() {
+	Player & getPlayer() {
 		return player;
 	}
 
-	const std::string getMessage() {
+	std::string const & getMessage() {
 		return msg;
 	}
 
 private:
-	Player * const player;
-	const std::string msg;
+	Player & player;
+	std::string const & msg;
 
 };
 

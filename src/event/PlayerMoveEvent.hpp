@@ -24,11 +24,9 @@
 #define _SRC_EVENT_PLAYER_MOVE_EVENT_HPP_
 
 #include "Event.hpp"
+#include "Player.hpp"
 
 #include <string>
-
-// Forward declare Player class
-class Player;
 
 /**
  * \brief Example event class to showcase some of the features of the EventBus
@@ -38,7 +36,7 @@ class Player;
 class PlayerMoveEvent : public Event
 {
 public:
-	PlayerMoveEvent(Object & sender, Player * const player, int oldX, int oldY, int oldZ) :
+	PlayerMoveEvent(Object & sender, Player & player, int oldX, int oldY, int oldZ) :
 	Event(sender),
 	player(player),
 	oldX(oldX),
@@ -48,7 +46,7 @@ public:
 
 	virtual ~PlayerMoveEvent() { }
 
-	Player * const getPlayer() {
+	Player & getPlayer() {
 		return player;
 	}
 
@@ -65,7 +63,7 @@ public:
 	}
 
 private:
-	Player * const player;
+	Player & player;
 
 	int oldX;
 	int oldY;

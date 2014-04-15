@@ -24,9 +24,11 @@
 #define _SRC_PLAYER_HPP_
 
 #include "Object.hpp"
-#include "PlayerMoveEvent.hpp"
+//#include "PlayerMoveEvent.hpp"
 
 #include <string>
+
+class PlayerMoveEvent;
 
 /**
  * \brief Demo class to showcase some of the features of the EventBus
@@ -51,27 +53,10 @@ public:
 		return name;
 	}
 
-	bool setPosition(int x, int y, int z) {
-
-		int savedX = posX;
-		int savedY = posY;
-		int savedZ = posZ;
-
+	void setPosition(int x, int y, int z) {
 		posX = x;
 		posY = y;
 		posZ = z;
-
-		PlayerMoveEvent e(*this, this, savedX, savedY, savedZ);
-		EventBus::FireEvent(e);
-
-		if (e.getCanceled()) {
-			posX = savedX;
-			posY = savedY;
-			posZ = savedZ;
-			return false;
-		}
-
-		return true;
 	}
 
 	int getX() {
