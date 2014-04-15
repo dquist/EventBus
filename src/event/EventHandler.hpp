@@ -26,6 +26,7 @@
 #include "Object.hpp"
 
 #include <typeinfo>
+#include <type_traits>
 
 // Forward declare the Event class
 class Event;
@@ -42,9 +43,12 @@ class EventHandler {
 public:
 
 	/**
-	 * \brief Empty default constructor
+	 * \brief Default constructor that enforces the template type
 	 */
-	EventHandler() { }
+	EventHandler() {
+		// An error here indicates you're trying to implement EventHandler with a type that is not derived from Event
+		static_assert(std::is_base_of<Event, T>::value, "EventHandler<T>: T must be a class derived from Event");
+	}
 
 
 	/**

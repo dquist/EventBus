@@ -109,7 +109,7 @@ public:
 	/**
 	 * Demo Function 1
 	 *
-	 * Registers an event listener on player1 and shows events can be fired and canceled
+	 * Registers an event listener on player1 and shows how events can be fired and canceled
 	 */
 	void Demo1() {
 
@@ -125,14 +125,16 @@ public:
 		// Create the player listener instance
 		playerListener = new PlayerListener();
 
-		// Register the player listener to listen for PlayerMoveEvent events
+		// Register the player listener to handler PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
-		// The return value is a HandlerRegistration pointer that can be used to unregister the event listener
+		// The return value is a HandlerRegistration pointer that can be used to unregister the event handler
 		playerMoveReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, &player1);
 
-		// The playerListener gets registered again, but this time as player chat event listener
-		// The lack of a second parameter means that it will not discriminate based on the source of the event
+		// The playerListener gets registered again, but this time as player chat event handler
+		// The lack of a second parameter means that it will service ALL player chat events,
+		// regardless of the source
 		playerChatReg = EventBus::AddHandler<PlayerChatEvent>(playerListener);
+
 
 		int x = 0;
 
@@ -145,6 +147,8 @@ public:
 		// PlayerMoveEvent if the X position is greater than 500
 		while (x <= 1000) {
 			printf("Changing player 1 X to %d\n", x);
+
+			// This method will fail once X > 500 because of the event handler we registered
 			if (player1.setPosition(x, 0, 0) == true) {
 				x += 200;
 			} else {
@@ -158,6 +162,8 @@ public:
 		// This loop does the same thing as the loop above, just with player2.
 		// Since we only registered the PlayerListener to player1, the bounds
 		// checking will have no effect for this loop
+		//
+		// This shows how an event handler will handle data from one source while ignoring others
 		while (x <= 1000) {
 			printf("Changing player 2 X to %d\n", x);
 			if (player2.setPosition(x, 0, 0) == true) {
@@ -172,6 +178,8 @@ public:
 		// Here two chat player chat events are created for each player and fired.
 		// Since the chat listener was registered without a source object, it will service
 		// all chat events and print both messages
+		//
+		// The event handler will print out the player name with the message when the event is fired
 		PlayerChatEvent chat1(this, &player1, "Hello I am Player 1!");
 		EventBus::FireEvent(chat1);
 
