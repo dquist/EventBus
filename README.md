@@ -51,7 +51,7 @@ class PlayerListener : public EventHandler<PlayerChatEvent>
 public:
   virtual void onEvent(PlayerChatEvent & e) override {
     // Print out the name of the player and the chat message
-    std::cout << "The player '" << e->getPlayer().getName() << "' said " << e.getMessage();
+    std::cout << "The player '" << e.getPlayer()->getName() << "' said " << e.getMessage();
   }
 };
 ```
