@@ -75,6 +75,7 @@ Now the pListener object has been registered and the *onEvent* will be invoked e
 The registered class can also be unregistered by using the returned *HandlerRegistration* object. Once a handler is unregistered, it will no longer recieve events of that type.
 
 ```c++
+// Unregister the listener and delete the registration object
 reg->removeHandler();
 delete reg;
 ```
