@@ -35,7 +35,7 @@ The event bus is designed so that each event type is a unique class that inherit
 
 ```c++
 Player player1("Player 1"); // Player instance with a name
-PlayerChatEvent e(*this, &player1, "This is a chat message"); // Create the event object
+PlayerChatEvent e(*this, player1, "This is a chat message"); // Create the event object
 EventBus::FireEvent(e); // Fire the event
 ```
 
@@ -51,7 +51,7 @@ class PlayerListener : public EventHandler<PlayerChatEvent>
 public:
   virtual void onEvent(PlayerChatEvent & e) override {
     // Print out the name of the player and the chat message
-    std::cout << "The player '" << e.getPlayer()->getName() << "' said " << e.getMessage();
+    std::cout << "The player '" << e.getPlayer().getName() << "' said " << e.getMessage();
   }
 };
 ```
