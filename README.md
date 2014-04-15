@@ -13,20 +13,20 @@ The EventBus does perform a few 'unsafe' operations by statically casting to and
 
 ## Source Files
 **Core Files**
-* /src/event/Event.hpp
-* /src/event/EventBus.cpp
-* /src/event/EventBus.hpp
-* /src/event/EventHandler.hpp
-* /src/event/HandlerRegistration.hpp
-* /src/event/Object.hpp
+* */src/event/Event.hpp*
+* */src/event/EventBus.cpp*
+* */src/event/EventBus.hpp*
+* */src/event/EventHandler.hpp*
+* */src/event/HandlerRegistration.hpp*
+* */src/event/Object.hpp*
 
 **Example Files**
 
 These are included for example only and can be deleted when using the framework.
-* /src/Main.cpp
-* /src/Player.hpp
-* /src/event/PlayerChatEvent.hpp
-* /src/event/PlayerMoveEvent.hpp
+* */src/Main.cpp*
+* */src/Player.hpp*
+* */src/event/PlayerChatEvent.hpp*
+* */src/event/PlayerMoveEvent.hpp*
 
 ## Usage
 ### Firing an Event
