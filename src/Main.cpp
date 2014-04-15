@@ -128,7 +128,7 @@ public:
 		// Register the player listener to handler PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
 		// The return value is a HandlerRegistration pointer that can be used to unregister the event handler
-		playerMoveReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, &player1);
+		playerMoveReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, player1);
 
 		// The playerListener gets registered again, but this time as player chat event handler
 		// The lack of a second parameter means that it will service ALL player chat events,

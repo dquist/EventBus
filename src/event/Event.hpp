@@ -84,7 +84,7 @@ public:
 	}
 
 private:
-	Object sender;
+	Object & sender;
 	bool canceled;
 
 };
