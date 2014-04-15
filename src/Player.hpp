@@ -61,7 +61,7 @@ public:
 		posY = y;
 		posZ = z;
 
-		PlayerMoveEvent e(this, this, savedX, savedY, savedZ);
+		PlayerMoveEvent e(*this, this, savedX, savedY, savedZ);
 		EventBus::FireEvent(e);
 
 		if (e.getCanceled()) {

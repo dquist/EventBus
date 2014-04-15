@@ -33,7 +33,7 @@ class Player;
 class PlayerChatEvent : public Event
 {
 public:
-	PlayerChatEvent(Object* sender, Player * const player, const std::string msg) :
+	PlayerChatEvent(Object & sender, Player * const player, const std::string msg) :
 	Event(sender),
 	player(player),
 	msg(msg) {

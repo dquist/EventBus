@@ -51,18 +51,18 @@ public:
 	 *
 	 * @param e The PlayerMoveEvent event
 	 */
-	virtual void onEvent(PlayerMoveEvent* e) override {
+	virtual void onEvent(PlayerMoveEvent & e) override {
 
 		// Ignore the event if it's already been canceled
-		if (e->getCanceled()) {
+		if (e.getCanceled()) {
 			return;
 		}
 
-		Player* p = e->getPlayer();
+		Player* p = e.getPlayer();
 
 		// Cancel the event if the new player position is outside of the border area
 		if (std::abs(p->getX()) > BORDER_SIZE || std::abs(p->getZ()) > BORDER_SIZE) {
-			e->setCanceled(true);
+			e.setCanceled(true);
 			printf("Canceled setting player %s position - outside of border\n", p->getName().c_str());
 			return;
 		}
@@ -74,14 +74,14 @@ public:
 	 *
 	 * @param e The PlayerChatEvent event
 	 */
-	virtual void onEvent(PlayerChatEvent* e) override {
+	virtual void onEvent(PlayerChatEvent & e) override {
 
 		// Ignore the event if it's already been canceled
-		if (e->getCanceled()) {
+		if (e.getCanceled()) {
 			return;
 		}
 
-		printf("The player '%s' said: %s\n", e->getPlayer()->getName().c_str(), e->getMessage().c_str());
+		printf("The player '%s' said: %s\n", e.getPlayer()->getName().c_str(), e.getMessage().c_str());
 	}
 
 private:
@@ -119,7 +119,7 @@ public:
 
 		// Declare a local PlayerMoveEvent and use the event bus to fire it
 		// There are currently no listeners so this won't actually do anything
-		PlayerMoveEvent e(this, &player1, 0, 0, 0);
+		PlayerMoveEvent e(*this, &player1, 0, 0, 0);
 		EventBus::FireEvent(e);
 
 		// Create the player listener instance
@@ -180,10 +180,10 @@ public:
 		// all chat events and print both messages
 		//
 		// The event handler will print out the player name with the message when the event is fired
-		PlayerChatEvent chat1(this, &player1, "Hello I am Player 1!");
+		PlayerChatEvent chat1(*this, &player1, "Hello I am Player 1!");
 		EventBus::FireEvent(chat1);
 
-		PlayerChatEvent chat2(this, &player2, "Hello I am Player 2!");
+		PlayerChatEvent chat2(*this, &player2, "Hello I am Player 2!");
 		EventBus::FireEvent(chat2);
 
 
@@ -192,7 +192,7 @@ public:
 
 
 		// If a chat event is fired again, it will not be serviced since the handler has been unregistered
-		PlayerChatEvent chat3(this, &player2, "This chat message will not be serviced");
+		PlayerChatEvent chat3(*this, &player2, "This chat message will not be serviced");
 		EventBus::FireEvent(chat3);
 
 

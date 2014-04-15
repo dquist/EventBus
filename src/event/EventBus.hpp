@@ -132,12 +132,12 @@ public:
 		// Iterate through all the registered handlers and dispatch to each one if the sender
 		// matches the source or if the sender is not specified
 		for (auto & reg : *registrations) {
-			if ((reg->getSender() == nullptr) || (reg->getSender() == e.getSender())) {
+			if ((reg->getSender() == nullptr) || (reg->getSender() == &e.getSender())) {
 
 				// This is where some magic happens. The void * handler is statically cast to an event handler
 				// of generic type Event and dispatched. The dispatch function will then do a dynamic
 				// cast to the correct event type so the matching onEvent method can be called
-				static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(&e);
+				static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(e);
 			}
 		}
 	}

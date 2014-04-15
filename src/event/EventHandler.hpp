@@ -62,7 +62,7 @@ public:
 	 *
 	 * @param The event instance
 	 */
-	virtual void onEvent(T*) = 0;
+	virtual void onEvent(T &) = 0;
 
 
 	/**
@@ -73,8 +73,8 @@ public:
 	 *
 	 * @param e The event to dispatch
 	 */
-	void dispatch(Event* e) {
-		onEvent(dynamic_cast<T*>(e));
+	void dispatch(Event & e) {
+		onEvent(dynamic_cast<T &>(e));
 	}
 };
 

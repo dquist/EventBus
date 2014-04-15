@@ -38,7 +38,7 @@ class Player;
 class PlayerMoveEvent : public Event
 {
 public:
-	PlayerMoveEvent(Object * const sender, Player * const player, int oldX, int oldY, int oldZ) :
+	PlayerMoveEvent(Object & sender, Player * const player, int oldX, int oldY, int oldZ) :
 	Event(sender),
 	player(player),
 	oldX(oldX),

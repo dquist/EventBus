@@ -42,14 +42,9 @@ public:
 	 * @param typeIndex The type ID of the inherited class
 	 * @param sender The sender of the event
 	 */
-	Event(Object* const sender) :
+	Event(Object & sender) :
 		sender(sender),
 		canceled(false) {
-
-		// The sender must not be null
-		if (sender == nullptr) {
-			throw std::runtime_error("Event parameter 'sender' was null.\n");
-		}
 	}
 
 
@@ -64,7 +59,7 @@ public:
 	 *
 	 * @return The event sender
 	 */
-	Object* const getSender() {
+	Object & getSender() {
 		return sender;
 	}
 
@@ -89,7 +84,7 @@ public:
 	}
 
 private:
-	Object* const sender;
+	Object sender;
 	bool canceled;
 
 };
