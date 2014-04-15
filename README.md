@@ -35,7 +35,7 @@ The event bus is designed so that each event type is a unique class that inherit
 
 ```c++
 Player player1("Player 1"); // Player instance with a name
-PlayerChatEvent e(this, &player1, "This is a chat message"); // Create the event object
+PlayerChatEvent e(*this, &player1, "This is a chat message"); // Create the event object
 EventBus::FireEvent(e); // Fire the event
 ```
 
@@ -49,16 +49,16 @@ For events to be useful there must be something listening for the events that ge
 class PlayerListener : public EventHandler<PlayerChatEvent>
 {
 public:
-  virtual void onEvent(PlayerChatEvent* e) override {
+  virtual void onEvent(PlayerChatEvent & e) override {
     // Print out the name of the player and the chat message
-    std::cout << "The player '" << e->getPlayer()->getName() << "' said " << e->getMessage();
+    std::cout << "The player '" << e->getPlayer().getName() << "' said " << e.getMessage();
   }
 };
 ```
 
 The *PlayerListener* class inherits from *EventHandler* and uses the template parameter of the player chat event. This is the event type that it will listen for. *EventHandler* is a template class and must always be qualified with the type of event that is being targeted. This makes it possible for a single class to listen for multiple events. The class simply needs to inherit from *EventHandler* multiple times, each with a different template parameter.
 
-All event handler functions must be virtual and called *onEvent* with a single parameter - a pointer to the handled event type. The *override* keyword is new in C++11 and tells the compiler that it intends to override an existing virtual function. The compiler will throw an error if the function signature does not match an existing virtual function from an inherited class.
+All event handler functions must be virtual and called *onEvent* with a single parameter - a reference to the handled event type. The *override* keyword is new in C++11 and tells the compiler that it intends to override an existing virtual function. The compiler will throw an error if the function signature does not match an existing virtual function from an inherited class.
 
 ### Registering and Unregistering an Event Handler
 
@@ -66,7 +66,7 @@ The last part is to register the event handler with the event bus using the *Add
 
 ```c++
 // Create an instance of PlayerListener and register it with the event bus
-PlayerListener* pListener = new PlayerListener();
+PlayerListener pListener;
 HandlerRegistration* reg = EventBus::AddHandler<PlayerChatEvent>(pListener);
 ```
     
@@ -90,7 +90,7 @@ Creating new event classes is easy - just make a new class that inherits from th
 class MyCustomEvent : public Event
 {
 public:
-  MyCustomEvent(Object * const sender) :
+  MyCustomEvent(Object & sender) :
   Event(sender) {
   }
   
