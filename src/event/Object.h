@@ -20,8 +20,33 @@
  * THE SOFTWARE.
  */
 
-#include "EventBus.h"
+#ifndef _SRC_EVENT_OBJECT_HPP_
+#define _SRC_EVENT_OBJECT_HPP_
 
-// Declare the static instance since this can't be done in the header file
-EventBus* EventBus::instance = nullptr;
+/**
+ * \brief Root class of the type hierarchy
+ *
+ * All events and event handlers derive from this class
+ */
+class Object {
+public:
+	/**
+	 * \brief Default empty constructor
+	 */
+	Object() { }
 
+
+	/**
+	 * Empty virtual destructor
+	 */
+	virtual ~Object() {	}
+
+
+	/**
+	 * Default empty copy constructor
+	 * @param other The instance to copy from
+	 */
+	Object (const Object& other) { }
+};
+
+#endif /* _SRC_EVENT_OBJECT_HPP_ */

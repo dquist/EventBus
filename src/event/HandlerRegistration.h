@@ -20,8 +20,19 @@
  * THE SOFTWARE.
  */
 
-#include "EventBus.h"
+#ifndef _SRC_EVENT_HANDLER_REGISTRATION_HPP_
+#define _SRC_EVENT_HANDLER_REGISTRATION_HPP_
 
-// Declare the static instance since this can't be done in the header file
-EventBus* EventBus::instance = nullptr;
+#include "Object.h"
 
+/**
+ * \brief Interface that that allows event handlers to be removed from the EventBus
+ */
+class HandlerRegistration : public Object {
+public:
+	virtual ~HandlerRegistration() { }
+
+	virtual void removeHandler() = 0;
+};
+
+#endif /* _SRC_EVENT_HANDLER_REGISTRATION_HPP_ */

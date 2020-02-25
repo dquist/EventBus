@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\event\Event.hpp" />
-    <ClInclude Include="src\event\EventBus.hpp" />
-    <ClInclude Include="src\event\EventHandler.hpp" />
-    <ClInclude Include="src\event\HandlerRegistration.hpp" />
-    <ClInclude Include="src\event\Object.hpp" />
-    <ClInclude Include="src\event\PlayerChatEvent.hpp" />
-    <ClInclude Include="src\event\PlayerMoveEvent.hpp" />
-    <ClInclude Include="src\Player.hpp" />
+    <ClInclude Include="src\event\Event.h" />
+    <ClInclude Include="src\event\EventBus.h" />
+    <ClInclude Include="src\event\EventHandler.h" />
+    <ClInclude Include="src\event\HandlerRegistration.h" />
+    <ClInclude Include="src\event\Object.h" />
+    <ClInclude Include="src\event\PlayerChatEvent.h" />
+    <ClInclude Include="src\event\PlayerMoveEvent.h" />
+    <ClInclude Include="src\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\event\EventBus.cpp" />

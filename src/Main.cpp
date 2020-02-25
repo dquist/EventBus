@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-#include "EventHandler.hpp"
-#include "EventBus.hpp"
-#include "Player.hpp"
+#include "EventHandler.h"
+#include "EventBus.h"
+#include "Player.h"
 
-#include "PlayerMoveEvent.hpp"
-#include "PlayerChatEvent.hpp"
+#include "PlayerMoveEvent.h"
+#include "PlayerChatEvent.h"
 
 #include <cstdio>
 #include <string>

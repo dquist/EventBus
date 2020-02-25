@@ -20,8 +20,64 @@
  * THE SOFTWARE.
  */
 
-#include "EventBus.h"
+#ifndef _SRC_PLAYER_HPP_
+#define _SRC_PLAYER_HPP_
 
-// Declare the static instance since this can't be done in the header file
-EventBus* EventBus::instance = nullptr;
+#include "Object.h"
+//#include "PlayerMoveEvent.h"
 
+#include <string>
+
+class PlayerMoveEvent;
+
+/**
+ * \brief Demo class to showcase some of the features of the EventBus
+ *
+ * This is not part of the core functionality and can be modified or deleted as desired
+ */
+class Player : public Object
+{
+public:
+	Player(std::string name) :
+		name(name),
+		posX(0),
+		posY(0),
+		posZ(0)
+	{ }
+
+	virtual ~Player() {
+
+	}
+
+	const std::string & getName() {
+		return name;
+	}
+
+	void setPosition(int x, int y, int z) {
+		posX = x;
+		posY = y;
+		posZ = z;
+	}
+
+	int getX() {
+		return posX;
+	}
+
+	int getY() {
+		return posY;
+	}
+
+	int getZ() {
+		return posZ;
+	}
+
+private:
+	std::string name;
+	int posX;
+	int posY;
+	int posZ;
+
+};
+
+
+#endif /* _SRC_PLAYER_HPP_ */
