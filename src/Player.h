@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_PLAYER_HPP_
-#define _SRC_PLAYER_HPP_
+#pragma once
 
 #include <string>
 
@@ -82,6 +81,3 @@ private:
 	int posZ;
 
 };
-
-
-#endif /* _SRC_PLAYER_HPP_ */

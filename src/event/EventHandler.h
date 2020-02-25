@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_EVENT_EVENT_HANDLER_HPP_
-#define _SRC_EVENT_EVENT_HANDLER_HPP_
+#pragma once
 
 #include <typeinfo>
 #include <type_traits>
@@ -79,4 +78,3 @@ public:
 	}
 };
 
-#endif /* _SRC_EVENT_EVENT_HANDLER_HPP_ */

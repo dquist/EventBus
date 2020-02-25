@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_EVENT_HANDLER_REGISTRATION_HPP_
-#define _SRC_EVENT_HANDLER_REGISTRATION_HPP_
+#pragma once
 
  /**
   * \brief Interface that that allows event handlers to be removed from the EventBus
@@ -33,5 +32,3 @@ public:
 
 	virtual void removeHandler() = 0;
 };
-
-#endif /* _SRC_EVENT_HANDLER_REGISTRATION_HPP_ */

@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_EVENT_PLAYER_CHAT_EVENT_HPP_
-#define _SRC_EVENT_PLAYER_CHAT_EVENT_HPP_
+#pragma once
 
 #include "Event.h"
 #include "Player.h"
@@ -55,4 +54,3 @@ private:
 
 };
 
-#endif /* _SRC_EVENT_PLAYER_CHAT_EVENT_HPP_ */

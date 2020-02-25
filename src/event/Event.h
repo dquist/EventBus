@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_EVENT_EVENT_HPP_
-#define _SRC_EVENT_EVENT_HPP_
+#pragma once
 
 #include <typeindex>
 #include <typeinfo>
@@ -66,5 +65,3 @@ private:
 	bool canceled = false;
 
 };
-
-#endif /* _SRC_EVENT_EVENT_HPP_ */

@@ -20,8 +20,7 @@
  * THE SOFTWARE.
  */
 
-#ifndef _SRC_EVENT_EVENT_BUS_HPP_
-#define _SRC_EVENT_EVENT_BUS_HPP_
+#pragma once
 
 #include "EventHandler.h"
 #include "Event.h"
@@ -255,5 +254,3 @@ private:
 	TypeMap handlers;
 
 };
-
-#endif /* _SRC_EVENT_EVENT_BUS_HPP_ */
