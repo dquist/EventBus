@@ -118,7 +118,6 @@ public:
 	 */
 	void Demo1()
 	{
-
 		// Two unique player objects
 		Player player1("Player1");
 		Player player2("Player2");
@@ -126,7 +125,7 @@ public:
 		// Declare a local PlayerMoveEvent and use the event bus to fire it
 		// There are currently no listeners so this won't actually do anything
 		PlayerMoveEvent e(player1, 0, 0, 0);
-		EventBus::FireEvent(e);
+		eventBus.FireEvent(e);
 
 		// Create the player listener instance
 		PlayerListener playerListener;
@@ -134,12 +133,12 @@ public:
 		// Register the player listener to handler PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
 		// The return value is a HandlerRegistration pointer that can be used to unregister the event handler
-		playerMoveReg = EventBus::AddHandler<PlayerMoveEvent>(playerListener, &player1);
+		playerMoveReg = eventBus.AddHandler<PlayerMoveEvent>(playerListener, &player1);
 
 		// The playerListener gets registered again, but this time as player chat event handler
 		// The lack of a second parameter means that it will service ALL player chat events,
 		// regardless of the source
-		playerChatReg = EventBus::AddHandler<PlayerChatEvent>(playerListener);
+		playerChatReg = eventBus.AddHandler<PlayerChatEvent>(playerListener);
 
 
 		int x = 0;
@@ -195,10 +194,10 @@ public:
 		//
 		// The event handler will print out the player name with the message when the event is fired
 		PlayerChatEvent chat1(this, player1, "Hello I am Player 1!");
-		EventBus::FireEvent(chat1);
+		eventBus.FireEvent(chat1);
 
 		PlayerChatEvent chat2(this, player2, "Hello I am Player 2!");
-		EventBus::FireEvent(chat2);
+		eventBus.FireEvent(chat2);
 
 
 		// The HandlerRegistration object can be used to unregister the event listener
@@ -207,7 +206,7 @@ public:
 
 		// If a chat event is fired again, it will not be serviced since the handler has been unregistered
 		PlayerChatEvent chat3(this, player2, "This chat message will not be serviced");
-		EventBus::FireEvent(chat3);
+		eventBus.FireEvent(chat3);
 
 
 		// Clean up
@@ -217,6 +216,8 @@ public:
 	}
 
 private:
+	EventBus eventBus;
+
 	HandlerRegistration* playerMoveReg;
 	HandlerRegistration* playerChatReg;
 
@@ -231,7 +232,7 @@ private:
 		player.setPosition(x, y, z);
 
 		PlayerMoveEvent e(player, savedX, savedY, savedZ);
-		EventBus::FireEvent(e);
+		eventBus.FireEvent(e);
 
 		if (e.IsCanceled())
 		{

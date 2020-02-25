@@ -36,7 +36,7 @@
    * \brief An Event system that allows decoupling of code through synchronous events
    *
    */
-class EventBus
+class EventBus final
 {
 public:
 	/**
@@ -52,24 +52,6 @@ public:
 
 
 	/**
-	 * \brief Returns the EventBus singleton instance
-	 *
-	 * Creates a new instance of the EventBus if hasn't already been created
-	 *
-	 * @return The singleton instance
-	 */
-	static EventBus* const GetInstance()
-	{
-		if (instance == nullptr)
-		{
-			instance = new EventBus();
-		}
-
-		return instance;
-	}
-
-
-	/**
 	 * \brief Registers a new event handler to the EventBus with a source specifier
 	 *
 	 * The template parameter is the specific type of event that is being added. Since a class can
@@ -81,18 +63,16 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>& handler, void* sender)
+	HandlerRegistration* const AddHandler(EventHandler<T>& handler, void* sender)
 	{
-		EventBus* instance = GetInstance();
-
 		// Fetch the list of event pairs unique to this event type
-		Registrations* registrations = instance->handlers[typeid(T)];
+		Registrations* registrations = this->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (registrations == nullptr)
 		{
 			registrations = new Registrations();
-			instance->handlers[typeid(T)] = registrations;
+			this->handlers[typeid(T)] = registrations;
 		}
 
 		// Create a new EventPair instance for this registration.
@@ -113,18 +93,16 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T>& handler)
+	HandlerRegistration* const AddHandler(EventHandler<T>& handler)
 	{
-		EventBus* instance = GetInstance();
-
 		// Fetch the list of event pairs unique to this event type
-		Registrations* registrations = instance->handlers[typeid(T)];
+		Registrations* registrations = this->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
 		if (registrations == nullptr)
 		{
 			registrations = new Registrations();
-			instance->handlers[typeid(T)] = registrations;
+			this->handlers[typeid(T)] = registrations;
 		}
 
 		// Create a new EventPair instance for this registration.
@@ -143,11 +121,9 @@ public:
 	 *
 	 * @param e The event to fire
 	 */
-	static void FireEvent(RoutedEvent& e)
+	void FireEvent(RoutedEvent& e)
 	{
-		EventBus* instance = GetInstance();
-
-		Registrations* registrations = instance->handlers[typeid(e)];
+		Registrations* registrations = this->handlers[typeid(e)];
 
 		// If the registrations list is null, then no handlers have been registered for this event
 		if (registrations == nullptr)
@@ -168,10 +144,6 @@ public:
 
 
 private:
-	// Singleton class instance
-	static EventBus* instance;
-
-
 	/**
 	 * \brief Registration class private to EventBus for registered event handlers
 	 */

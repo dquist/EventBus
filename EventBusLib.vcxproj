@@ -27,9 +27,6 @@
     <ClInclude Include="include\eventbus\HandlerRegistration.h" />
     <ClInclude Include="include\eventbus\SubscriptionDescriptor.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\EventBus.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{389893EA-1F9C-4417-98D6-A2E867CD9842}</ProjectGuid>
