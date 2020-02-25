@@ -22,35 +22,19 @@
 
 #pragma once
 
-#include "eventbus/RoutedEvent.h"
-#include "Player.h"
+#include <typeindex>
+#include <typeinfo>
+#include <vector>
+#include <stdexcept>
 
-#include <string>
-
-class PlayerChatEvent : public CancelableEvent
+ /**
+  * The abstract base class for all routed events.
+  */
+class RoutedEvent
 {
+protected:
+	RoutedEvent() = default;
+
 public:
-	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
-		player(player),
-		msg(msg)
-	{
-	}
-
-	virtual ~PlayerChatEvent() {}
-
-	Player& getPlayer()
-	{
-		return player;
-	}
-
-	std::string const& getMessage()
-	{
-		return msg;
-	}
-
-private:
-	Player& player;
-	std::string const& msg;
-
+	virtual ~RoutedEvent() = default;
 };
-

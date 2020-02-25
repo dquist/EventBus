@@ -22,46 +22,29 @@
 
 #pragma once
 
-#include <typeindex>
-#include <typeinfo>
-#include <vector>
-#include <stdexcept>
+#include "RoutedEvent.h"
 
  /**
-  * \brief The base event class, all events inherit from this class
+  * Base class for cancelable routed events.
   */
-class Event
+class CancelableEvent : public RoutedEvent
 {
+protected:
+	CancelableEvent() = default;
+
 public:
+	virtual ~CancelableEvent() = default;
 
-	/**
-	 * \brief Empty virtual destructor
-	 */
-	virtual ~Event() {}
-
-
-	/**
-	 * \brief Gets whether the event has been canceled
-	 *
-	 * @return true if the event is canceled
-	 */
-	bool getCanceled()
+	bool getCanceled() const
 	{
-		return canceled;
+		return _isCanceled;
 	}
 
-
-	/**
-	 * \brief Sets the canceled status for the event
-	 *
-	 * @param canceled Whether the even is canceled or not
-	 */
-	void setCanceled(bool canceled)
+	void setCanceled(bool value)
 	{
-		this->canceled = canceled;
+		_isCanceled = value;
 	}
 
 private:
-	bool canceled = false;
-
+	bool _isCanceled = false;
 };

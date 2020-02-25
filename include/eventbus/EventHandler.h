@@ -26,7 +26,7 @@
 #include <type_traits>
 
  // Forward declare the Event class
-class Event;
+class RoutedEvent;
 
 /**
  * \brief Base class of all classes that listen for events
@@ -46,7 +46,7 @@ public:
 	EventHandler()
 	{
 		// An error here indicates you're trying to implement EventHandler with a type that is not derived from Event
-		static_assert(std::is_base_of<Event, T>::value, "EventHandler<T>: T must be a class derived from Event");
+		static_assert(std::is_base_of<RoutedEvent, T>::value, "EventHandler<T>: T must be a class derived from Event");
 	}
 
 
@@ -72,7 +72,7 @@ public:
 	 *
 	 * @param e The event to dispatch
 	 */
-	void dispatch(Event& e)
+	void dispatch(RoutedEvent& e)
 	{
 		onEvent(dynamic_cast<T&>(e));
 	}

@@ -23,7 +23,7 @@
 #pragma once
 
 #include "EventHandler.h"
-#include "Event.h"
+#include "RoutedEvent.h"
 #include "HandlerRegistration.h"
 
 #include <list>
@@ -142,7 +142,7 @@ public:
 	 *
 	 * @param e The event to fire
 	 */
-	static void FireEvent(Event& e)
+	static void FireEvent(RoutedEvent& e)
 	{
 		EventBus* instance = GetInstance();
 
@@ -161,7 +161,7 @@ public:
 			// This is where some magic happens. The void * handler is statically cast to an event handler
 			// of generic type Event and dispatched. The dispatch function will then do a dynamic
 			// cast to the correct event type so the matching onEvent method can be called
-			static_cast<EventHandler<Event>*>(reg->getHandler())->dispatch(e);
+			static_cast<EventHandler<RoutedEvent>*>(reg->getHandler())->dispatch(e);
 		}
 	}
 

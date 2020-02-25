@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\eventbus\Event.h">
-      <Filter>include/eventbus</Filter>
-    </ClInclude>
     <ClInclude Include="include\eventbus\EventBus.h">
       <Filter>include/eventbus</Filter>
     </ClInclude>
@@ -19,6 +16,12 @@
       <Filter>include/eventbus</Filter>
     </ClInclude>
     <ClInclude Include="include\eventbus\HandlerRegistration.h">
+      <Filter>include/eventbus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eventbus\RoutedEvent.h">
+      <Filter>include/eventbus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eventbus\CancelableEvent.h">
       <Filter>include/eventbus</Filter>
     </ClInclude>
   </ItemGroup>

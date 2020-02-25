@@ -22,17 +22,18 @@
 
 #pragma once
 
-#include "eventbus/Event.h"
+#include "eventbus/RoutedEvent.h"
 #include "Player.h"
 
 #include <string>
+#include "eventbus/CancelableEvent.h"
 
  /**
-  * \brief Example event class to showcase some of the features of the EventBus
-  *
-  * This is not part of the core functionality and can be modified or deleted as desired
-  */
-class PlayerMoveEvent : public Event
+   * \brief Example event class to showcase some of the features of the EventBus
+   *
+   * This is not part of the core functionality and can be modified or deleted as desired
+   */
+class PlayerMoveEvent : public CancelableEvent
 {
 public:
 	PlayerMoveEvent(Player& player, int oldX, int oldY, int oldZ) :
