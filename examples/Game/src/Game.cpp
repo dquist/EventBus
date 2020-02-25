@@ -55,7 +55,7 @@ public:
 	{
 
 		// Ignore the event if it's already been canceled
-		if (e.getCanceled())
+		if (e.IsCanceled())
 		{
 			return;
 		}
@@ -65,7 +65,7 @@ public:
 		// Cancel the event if the new player position is outside of the border area
 		if (std::abs(p.getX()) > BORDER_SIZE || std::abs(p.getZ()) > BORDER_SIZE)
 		{
-			e.setCanceled(true);
+			e.SetCanceled(true);
 			printf("Canceled setting player %s position - outside of border\n", p.getName().c_str());
 			return;
 		}
@@ -81,7 +81,7 @@ public:
 	{
 
 		// Ignore the event if it's already been canceled
-		if (e.getCanceled())
+		if (e.IsCanceled())
 		{
 			return;
 		}
@@ -233,7 +233,7 @@ private:
 		PlayerMoveEvent e(player, savedX, savedY, savedZ);
 		EventBus::FireEvent(e);
 
-		if (e.getCanceled())
+		if (e.IsCanceled())
 		{
 			player.setPosition(savedX, savedY, savedZ);
 			return false;

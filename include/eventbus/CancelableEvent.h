@@ -39,12 +39,15 @@ public:
 	CancelableEvent& operator=(const CancelableEvent& other) = default;
 	CancelableEvent& operator=(CancelableEvent&& other) = default;
 
-	bool getCanceled() const
+	/// Gets whether the event is canceled
+	[[nodiscard]]
+	bool IsCanceled() const
 	{
 		return _isCanceled;
 	}
 
-	void setCanceled(const bool value)
+	/// Sets whether the event is canceled
+	void SetCanceled(const bool value)
 	{
 		_isCanceled = value;
 	}
