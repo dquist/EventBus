@@ -31,16 +31,20 @@ class CancelableEvent : public RoutedEvent
 {
 protected:
 	CancelableEvent() = default;
+	CancelableEvent(CancelableEvent&& other) = default;
 
 public:
 	virtual ~CancelableEvent() = default;
+	CancelableEvent(const CancelableEvent& other) = delete;
+	CancelableEvent& operator=(const CancelableEvent& other) = default;
+	CancelableEvent& operator=(CancelableEvent&& other) = default;
 
 	bool getCanceled() const
 	{
 		return _isCanceled;
 	}
 
-	void setCanceled(bool value)
+	void setCanceled(const bool value)
 	{
 		_isCanceled = value;
 	}

@@ -29,7 +29,11 @@ class RoutedEvent
 {
 protected:
 	RoutedEvent() = default;
+	RoutedEvent(RoutedEvent&& other) = default;
 
 public:
 	virtual ~RoutedEvent() = default;
+	RoutedEvent(const RoutedEvent& other) = delete;
+	RoutedEvent& operator=(const RoutedEvent& other) = default;
+	RoutedEvent& operator=(RoutedEvent&& other) = default;
 };
