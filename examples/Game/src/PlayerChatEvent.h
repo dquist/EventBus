@@ -22,55 +22,35 @@
 
 #pragma once
 
-#include "Event.h"
+#include "eventbus/Event.h"
 #include "Player.h"
 
 #include <string>
 
- /**
-  * \brief Example event class to showcase some of the features of the EventBus
-  *
-  * This is not part of the core functionality and can be modified or deleted as desired
-  */
-class PlayerMoveEvent : public Event
+class PlayerChatEvent : public Event
 {
 public:
-	PlayerMoveEvent(Player& player, int oldX, int oldY, int oldZ) :
+	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
 		player(player),
-		oldX(oldX),
-		oldY(oldY),
-		oldZ(oldZ)
+		msg(msg)
 	{
 	}
 
-	virtual ~PlayerMoveEvent() {}
+	virtual ~PlayerChatEvent() {}
 
 	Player& getPlayer()
 	{
 		return player;
 	}
 
-	int getOldX()
+	std::string const& getMessage()
 	{
-		return oldX;
-	}
-
-	int getOldY()
-	{
-		return oldY;
-	}
-
-	int getOldZ()
-	{
-		return oldZ;
+		return msg;
 	}
 
 private:
 	Player& player;
-
-	int oldX;
-	int oldY;
-	int oldZ;
+	std::string const& msg;
 
 };
 

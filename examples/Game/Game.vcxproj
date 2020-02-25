@@ -22,14 +22,14 @@
     <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\event\PlayerChatEvent.h" />
-    <ClInclude Include="..\..\src\event\PlayerMoveEvent.h" />
-    <ClInclude Include="..\..\src\Player.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\EventBusLib.vcxproj">
       <Project>{389893ea-1f9c-4417-98d6-a2e867cd9842}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\PlayerChatEvent.h" />
+    <ClInclude Include="src\PlayerMoveEvent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -103,7 +103,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\event;$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

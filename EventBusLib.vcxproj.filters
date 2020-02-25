@@ -4,27 +4,27 @@
     <Filter Include="src">
       <UniqueIdentifier>{6922e294-9e29-41f9-adb2-107eadd44cc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\event">
-      <UniqueIdentifier>{6bb7d5f4-7cd3-4cc2-a150-382cfbf0909e}</UniqueIdentifier>
+    <Filter Include="include/eventbus">
+      <UniqueIdentifier>{c6cf2beb-4821-43bb-8059-050b355aa6d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\event\Event.h">
-      <Filter>src\event</Filter>
+    <ClInclude Include="include\eventbus\Event.h">
+      <Filter>include/eventbus</Filter>
     </ClInclude>
-    <ClInclude Include="src\event\EventBus.h">
-      <Filter>src\event</Filter>
+    <ClInclude Include="include\eventbus\EventBus.h">
+      <Filter>include/eventbus</Filter>
     </ClInclude>
-    <ClInclude Include="src\event\EventHandler.h">
-      <Filter>src\event</Filter>
+    <ClInclude Include="include\eventbus\EventHandler.h">
+      <Filter>include/eventbus</Filter>
     </ClInclude>
-    <ClInclude Include="src\event\HandlerRegistration.h">
-      <Filter>src\event</Filter>
+    <ClInclude Include="include\eventbus\HandlerRegistration.h">
+      <Filter>include/eventbus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\event\EventBus.cpp">
-      <Filter>src\event</Filter>
+    <ClCompile Include="src\EventBus.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

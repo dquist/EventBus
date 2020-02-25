@@ -20,37 +20,8 @@
  * THE SOFTWARE.
  */
 
-#pragma once
+#include "eventbus/EventBus.h"
 
-#include "Event.h"
-#include "Player.h"
-
-#include <string>
-
-class PlayerChatEvent : public Event
-{
-public:
-	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
-		player(player),
-		msg(msg)
-	{
-	}
-
-	virtual ~PlayerChatEvent() {}
-
-	Player& getPlayer()
-	{
-		return player;
-	}
-
-	std::string const& getMessage()
-	{
-		return msg;
-	}
-
-private:
-	Player& player;
-	std::string const& msg;
-
-};
+ // Declare the static instance since this can't be done in the header file
+EventBus* EventBus::instance = nullptr;
 

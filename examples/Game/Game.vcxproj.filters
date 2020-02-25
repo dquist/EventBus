@@ -11,13 +11,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\event\PlayerMoveEvent.h">
+    <ClInclude Include="src\PlayerChatEvent.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\event\PlayerChatEvent.h">
+    <ClInclude Include="src\PlayerMoveEvent.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Player.h">
+    <ClInclude Include="src\Player.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

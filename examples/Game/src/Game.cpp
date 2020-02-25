@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#include "EventHandler.h"
-#include "EventBus.h"
+#include "eventbus/EventHandler.h"
+#include "eventbus/EventBus.h"
 #include "Player.h"
 
 #include "PlayerMoveEvent.h"
