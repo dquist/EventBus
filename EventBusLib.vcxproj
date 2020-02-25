@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\eventbus\CancelableEvent.h" />
+    <ClInclude Include="include\eventbus\EventSubscription.h" />
     <ClInclude Include="include\eventbus\RoutedEvent.h" />
     <ClInclude Include="include\eventbus\EventBus.h" />
     <ClInclude Include="include\eventbus\EventHandler.h" />
     <ClInclude Include="include\eventbus\HandlerRegistration.h" />
+    <ClInclude Include="include\eventbus\SubscriptionDescriptor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EventBus.cpp" />

@@ -24,6 +24,12 @@
     <ClInclude Include="include\eventbus\CancelableEvent.h">
       <Filter>include/eventbus</Filter>
     </ClInclude>
+    <ClInclude Include="include\eventbus\EventSubscription.h">
+      <Filter>include/eventbus</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eventbus\SubscriptionDescriptor.h">
+      <Filter>include/eventbus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EventBus.cpp">
