@@ -9,12 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\event\PlayerChatEvent.h">
-      <Filter>src\event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\event\PlayerMoveEvent.h">
-      <Filter>src\event</Filter>
-    </ClInclude>
     <ClInclude Include="src\event\Event.h">
       <Filter>src\event</Filter>
     </ClInclude>
@@ -27,16 +21,10 @@
     <ClInclude Include="src\event\HandlerRegistration.h">
       <Filter>src\event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player.h">
-      <Filter>src</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\event\EventBus.cpp">
       <Filter>src\event</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
