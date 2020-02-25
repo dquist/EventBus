@@ -27,7 +27,7 @@
     <ClInclude Include="..\..\src\Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\EventBus.vcxproj">
+    <ProjectReference Include="..\..\EventBusLib.vcxproj">
       <Project>{389893ea-1f9c-4417-98d6-a2e867cd9842}</Project>
     </ProjectReference>
   </ItemGroup>
