@@ -31,25 +31,28 @@
 class PlayerChatEvent : public Event
 {
 public:
-	PlayerChatEvent(Object & sender, Player & player, std::string const & msg) :
-	Event(sender),
-	player(player),
-	msg(msg) {
+	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
+		Event(sender),
+		player(player),
+		msg(msg)
+	{
 	}
 
-	virtual ~PlayerChatEvent() { }
+	virtual ~PlayerChatEvent() {}
 
-	Player & getPlayer() {
+	Player& getPlayer()
+	{
 		return player;
 	}
 
-	std::string const & getMessage() {
+	std::string const& getMessage()
+	{
 		return msg;
 	}
 
 private:
-	Player & player;
-	std::string const & msg;
+	Player& player;
+	std::string const& msg;
 
 };
 

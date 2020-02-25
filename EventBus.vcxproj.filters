@@ -27,9 +27,6 @@
     <ClInclude Include="src\event\HandlerRegistration.h">
       <Filter>src\event</Filter>
     </ClInclude>
-    <ClInclude Include="src\event\Object.h">
-      <Filter>src\event</Filter>
-    </ClInclude>
     <ClInclude Include="src\Player.h">
       <Filter>src</Filter>
     </ClInclude>

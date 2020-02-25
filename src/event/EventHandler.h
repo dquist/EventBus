@@ -23,12 +23,10 @@
 #ifndef _SRC_EVENT_EVENT_HANDLER_HPP_
 #define _SRC_EVENT_EVENT_HANDLER_HPP_
 
-#include "Object.h"
-
 #include <typeinfo>
 #include <type_traits>
 
-// Forward declare the Event class
+ // Forward declare the Event class
 class Event;
 
 /**
@@ -39,13 +37,15 @@ class Event;
  * multiple EventHandler base classes each using a different template parameter.
  */
 template <class T>
-class EventHandler {
+class EventHandler
+{
 public:
 
 	/**
 	 * \brief Default constructor that enforces the template type
 	 */
-	EventHandler() {
+	EventHandler()
+	{
 		// An error here indicates you're trying to implement EventHandler with a type that is not derived from Event
 		static_assert(std::is_base_of<Event, T>::value, "EventHandler<T>: T must be a class derived from Event");
 	}
@@ -54,7 +54,7 @@ public:
 	/**
 	 * \brief Empty virtual destructor
 	 */
-	virtual ~EventHandler() { }
+	virtual ~EventHandler() {}
 
 
 	/**
@@ -62,7 +62,7 @@ public:
 	 *
 	 * @param The event instance
 	 */
-	virtual void onEvent(T &) = 0;
+	virtual void onEvent(T&) = 0;
 
 
 	/**
@@ -73,8 +73,9 @@ public:
 	 *
 	 * @param e The event to dispatch
 	 */
-	void dispatch(Event & e) {
-		onEvent(dynamic_cast<T &>(e));
+	void dispatch(Event& e)
+	{
+		onEvent(dynamic_cast<T&>(e));
 	}
 };
 

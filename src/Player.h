@@ -23,9 +23,6 @@
 #ifndef _SRC_PLAYER_HPP_
 #define _SRC_PLAYER_HPP_
 
-#include "Object.h"
-//#include "PlayerMoveEvent.h"
-
 #include <string>
 
 class PlayerMoveEvent;
@@ -35,7 +32,7 @@ class PlayerMoveEvent;
  *
  * This is not part of the core functionality and can be modified or deleted as desired
  */
-class Player : public Object
+class Player
 {
 public:
 	Player(std::string name) :
@@ -43,31 +40,38 @@ public:
 		posX(0),
 		posY(0),
 		posZ(0)
-	{ }
+	{
+	}
 
-	virtual ~Player() {
+	virtual ~Player()
+	{
 
 	}
 
-	const std::string & getName() {
+	const std::string& getName()
+	{
 		return name;
 	}
 
-	void setPosition(int x, int y, int z) {
+	void setPosition(int x, int y, int z)
+	{
 		posX = x;
 		posY = y;
 		posZ = z;
 	}
 
-	int getX() {
+	int getX()
+	{
 		return posX;
 	}
 
-	int getY() {
+	int getY()
+	{
 		return posY;
 	}
 
-	int getZ() {
+	int getZ()
+	{
 		return posZ;
 	}
 

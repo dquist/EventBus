@@ -23,17 +23,15 @@
 #ifndef _SRC_EVENT_EVENT_HPP_
 #define _SRC_EVENT_EVENT_HPP_
 
-#include "Object.h"
-
 #include <typeindex>
 #include <typeinfo>
 #include <vector>
 #include <stdexcept>
 
-/**
- * \brief The base event class, all events inherit from this class
- */
-class Event : public Object
+ /**
+  * \brief The base event class, all events inherit from this class
+  */
+class Event
 {
 public:
 	/**
@@ -42,16 +40,17 @@ public:
 	 * @param typeIndex The type ID of the inherited class
 	 * @param sender The sender of the event
 	 */
-	Event(Object & sender) :
+	Event(void* sender) :
 		sender(sender),
-		canceled(false) {
+		canceled(false)
+	{
 	}
 
 
 	/**
 	 * \brief Empty virtual destructor
 	 */
-	virtual ~Event() { }
+	virtual ~Event() {}
 
 
 	/**
@@ -59,7 +58,8 @@ public:
 	 *
 	 * @return The event sender
 	 */
-	Object & getSender() {
+	void* getSender()
+	{
 		return sender;
 	}
 
@@ -69,7 +69,8 @@ public:
 	 *
 	 * @return true if the event is canceled
 	 */
-	bool getCanceled() {
+	bool getCanceled()
+	{
 		return canceled;
 	}
 
@@ -79,12 +80,13 @@ public:
 	 *
 	 * @param canceled Whether the even is canceled or not
 	 */
-	void setCanceled(bool canceled) {
+	void setCanceled(bool canceled)
+	{
 		this->canceled = canceled;
 	}
 
 private:
-	Object & sender;
+	void* sender;
 	bool canceled;
 
 };

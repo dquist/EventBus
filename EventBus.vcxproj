@@ -23,7 +23,6 @@
     <ClInclude Include="src\event\EventBus.h" />
     <ClInclude Include="src\event\EventHandler.h" />
     <ClInclude Include="src\event\HandlerRegistration.h" />
-    <ClInclude Include="src\event\Object.h" />
     <ClInclude Include="src\event\PlayerChatEvent.h" />
     <ClInclude Include="src\event\PlayerMoveEvent.h" />
     <ClInclude Include="src\Player.h" />

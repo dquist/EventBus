@@ -28,42 +28,47 @@
 
 #include <string>
 
-/**
- * \brief Example event class to showcase some of the features of the EventBus
- *
- * This is not part of the core functionality and can be modified or deleted as desired
- */
+ /**
+  * \brief Example event class to showcase some of the features of the EventBus
+  *
+  * This is not part of the core functionality and can be modified or deleted as desired
+  */
 class PlayerMoveEvent : public Event
 {
 public:
-	PlayerMoveEvent(Object & sender, Player & player, int oldX, int oldY, int oldZ) :
-	Event(sender),
-	player(player),
-	oldX(oldX),
-	oldY(oldY),
-	oldZ(oldZ) {
+	PlayerMoveEvent(void* sender, Player& player, int oldX, int oldY, int oldZ) :
+		Event(sender),
+		player(player),
+		oldX(oldX),
+		oldY(oldY),
+		oldZ(oldZ)
+	{
 	}
 
-	virtual ~PlayerMoveEvent() { }
+	virtual ~PlayerMoveEvent() {}
 
-	Player & getPlayer() {
+	Player& getPlayer()
+	{
 		return player;
 	}
 
-	int getOldX() {
+	int getOldX()
+	{
 		return oldX;
 	}
 
-	int getOldY() {
+	int getOldY()
+	{
 		return oldY;
 	}
 
-	int getOldZ() {
+	int getOldZ()
+	{
 		return oldZ;
 	}
 
 private:
-	Player & player;
+	Player& player;
 
 	int oldX;
 	int oldY;

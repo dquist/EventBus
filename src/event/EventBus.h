@@ -23,7 +23,6 @@
 #ifndef _SRC_EVENT_EVENT_BUS_HPP_
 #define _SRC_EVENT_EVENT_BUS_HPP_
 
-#include "Object.h"
 #include "EventHandler.h"
 #include "Event.h"
 #include "HandlerRegistration.h"
@@ -33,22 +32,23 @@
 #include <unordered_map>
 
 
-/**
- * \brief An Event system that allows decoupling of code through synchronous events
- *
- */
-class EventBus : public Object {
+ /**
+  * \brief An Event system that allows decoupling of code through synchronous events
+  *
+  */
+class EventBus
+{
 public:
 	/**
 	 * \brief Default empty constructor
 	 */
-	EventBus() { }
+	EventBus() {}
 
 
 	/**
 	 * \brief Empty virtual destructor
 	 */
-	virtual ~EventBus() { }
+	virtual ~EventBus() {}
 
 
 	/**
@@ -58,8 +58,10 @@ public:
 	 *
 	 * @return The singleton instance
 	 */
-	static EventBus* const GetInstance() {
-		if (instance == nullptr) {
+	static EventBus* const GetInstance()
+	{
+		if (instance == nullptr)
+		{
 			instance = new EventBus();
 		}
 
@@ -79,14 +81,16 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T> & handler, Object & sender) {
+	static HandlerRegistration* const AddHandler(EventHandler<T>& handler, void* sender)
+	{
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
 		Registrations* registrations = instance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
-		if (registrations == nullptr) {
+		if (registrations == nullptr)
+		{
 			registrations = new Registrations();
 			instance->handlers[typeid(T)] = registrations;
 		}
@@ -109,14 +113,16 @@ public:
 	 * @return An EventRegistration pointer which can be used to unregister the event handler
 	 */
 	template <class T>
-	static HandlerRegistration* const AddHandler(EventHandler<T> & handler) {
+	static HandlerRegistration* const AddHandler(EventHandler<T>& handler)
+	{
 		EventBus* instance = GetInstance();
 
 		// Fetch the list of event pairs unique to this event type
 		Registrations* registrations = instance->handlers[typeid(T)];
 
 		// Create a new collection instance for this type if it hasn't been created yet
-		if (registrations == nullptr) {
+		if (registrations == nullptr)
+		{
 			registrations = new Registrations();
 			instance->handlers[typeid(T)] = registrations;
 		}
@@ -137,20 +143,24 @@ public:
 	 *
 	 * @param e The event to fire
 	 */
-	static void FireEvent(Event & e) {
+	static void FireEvent(Event& e)
+	{
 		EventBus* instance = GetInstance();
 
 		Registrations* registrations = instance->handlers[typeid(e)];
 
 		// If the registrations list is null, then no handlers have been registered for this event
-		if (registrations == nullptr) {
+		if (registrations == nullptr)
+		{
 			return;
 		}
 
 		// Iterate through all the registered handlers and dispatch to each one if the sender
 		// matches the source or if the sender is not specified
-		for (auto & reg : *registrations) {
-			if ((reg->getSender() == nullptr) || (reg->getSender() == &e.getSender())) {
+		for (auto& reg : *registrations)
+		{
+			if ((reg->getSender() == nullptr) || (reg->getSender() == e.getSender()))
+			{
 
 				// This is where some magic happens. The void * handler is statically cast to an event handler
 				// of generic type Event and dispatched. The dispatch function will then do a dynamic
@@ -184,18 +194,19 @@ private:
 		 * @param registrations The handler collection for this event type
 		 * @param sender The registered sender object
 		 */
-		EventRegistration(void * const handler, Registrations * const registrations, Object * const sender ) :
+		EventRegistration(void* const handler, Registrations* const registrations, void* const sender) :
 			handler(handler),
 			registrations(registrations),
 			sender(sender),
 			registered(true)
-		{ }
+		{
+		}
 
 
 		/**
 		 * \brief Empty virtual destructor
 		 */
-		virtual ~EventRegistration() { }
+		virtual ~EventRegistration() {}
 
 
 		/**
@@ -203,7 +214,8 @@ private:
 		 *
 		 * @return The event handler
 		 */
-		void * const getHandler() {
+		void* const getHandler()
+		{
 			return handler;
 		}
 
@@ -213,7 +225,8 @@ private:
 		 *
 		 * @return The registered sender object
 		 */
-		Object* const getSender() {
+		void* const getSender()
+		{
 			return sender;
 		}
 
@@ -223,17 +236,19 @@ private:
 		 *
 		 * The event handler will no longer receive events for this event type
 		 */
-		virtual void removeHandler() {
-			if (registered) {
+		virtual void removeHandler()
+		{
+			if (registered)
+			{
 				registrations->remove(this);
 				registered = false;
 			}
 		}
 
 	private:
-		void * const handler;
+		void* const handler;
 		Registrations* const registrations;
-		Object* const sender;
+		void* const sender;
 
 		bool registered;
 	};

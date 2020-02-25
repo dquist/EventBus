@@ -23,14 +23,13 @@
 #ifndef _SRC_EVENT_HANDLER_REGISTRATION_HPP_
 #define _SRC_EVENT_HANDLER_REGISTRATION_HPP_
 
-#include "Object.h"
-
-/**
- * \brief Interface that that allows event handlers to be removed from the EventBus
- */
-class HandlerRegistration : public Object {
+ /**
+  * \brief Interface that that allows event handlers to be removed from the EventBus
+  */
+class HandlerRegistration
+{
 public:
-	virtual ~HandlerRegistration() { }
+	virtual ~HandlerRegistration() {}
 
 	virtual void removeHandler() = 0;
 };
