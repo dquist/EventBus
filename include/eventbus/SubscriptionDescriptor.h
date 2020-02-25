@@ -53,6 +53,12 @@ public:
 	SubscriptionDescriptor& operator=(const SubscriptionDescriptor& other) = delete;
 	SubscriptionDescriptor& operator=(SubscriptionDescriptor&& other) = delete;
 
+	[[nodiscard]]
+	const type_info& GetType() const
+	{
+		return _typeInfo;
+	}
+
 	/// Dispatches an event to the 
 	template <typename TEvent>
 	void Dispatch(TEvent& event)

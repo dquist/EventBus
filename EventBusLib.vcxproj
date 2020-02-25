@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="include\eventbus\CancelableEvent.h" />
     <ClInclude Include="include\eventbus\EventSubscription.h" />
+    <ClInclude Include="include\eventbus\HandlerCollection.h" />
+    <ClInclude Include="include\eventbus\HandlerCollectionMap.h" />
     <ClInclude Include="include\eventbus\RoutedEvent.h" />
     <ClInclude Include="include\eventbus\EventBus.h" />
     <ClInclude Include="include\eventbus\EventHandler.h" />

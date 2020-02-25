@@ -22,32 +22,45 @@
 
 #pragma once
 
+#include "HandlerCollection.h"
+
+#include <unordered_map>
+#include "EventSubscription.h"
+
  /**
-  * The abstract base class for all routed events.
-  */
-class EventSubscription final
+	 * An unordered map of event types to event subscription collections
+	 */
+class HandlerCollectionMap final : public std::unordered_map<std::type_index, HandlerCollection*>
 {
 public:
-	EventSubscription(HandlerCollection& collection, const SubscriptionDescriptor& descriptor) :
-		_collection(collection),
-		_descriptor(descriptor)
+	HandlerCollectionMap() = default;
+	~HandlerCollectionMap() = default;
+	HandlerCollectionMap(HandlerCollectionMap&& other) = delete;
+	HandlerCollectionMap(const HandlerCollectionMap& other) = delete;
+	HandlerCollectionMap& operator=(const HandlerCollectionMap& other) = delete;
+	HandlerCollectionMap& operator=(HandlerCollectionMap&& other) = delete;
+
+	template <typename TEvent>
+	void Dispatch(TEvent& event)
 	{
+		const auto collection = (*this)[typeid(TEvent)];
+		if (collection != nullptr)
+			collection->Dispatch(event);
 
 	}
 
-	~EventSubscription() = default;
-	EventSubscription(EventSubscription&& other) = delete;
-	EventSubscription(const EventSubscription& other) = default;
-	EventSubscription& operator=(const EventSubscription& other) = delete;
-	EventSubscription& operator=(EventSubscription&& other) = delete;
-
-	/// Unregisters the event subscription
-	void Unsubscribe() const
+	EventSubscription Add(const SubscriptionDescriptor& descriptor)
 	{
-		_collection.erase(_descriptor);
-	}
+		const auto& type = descriptor.GetType();
+		auto collection = (*this)[type];
+		if (collection == nullptr)
+		{
+			collection = new HandlerCollection();
+			(*this)[type] = collection;
+		}
 
-private:
-	HandlerCollection& _collection;
-	const SubscriptionDescriptor& _descriptor;
+		const EventSubscription subscription(*collection, descriptor);
+		collection->insert(descriptor);
+		return subscription;
+	}
 };

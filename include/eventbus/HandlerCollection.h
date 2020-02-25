@@ -22,32 +22,29 @@
 
 #pragma once
 
+#include "SubscriptionDescriptor.h"
+
+#include <unordered_set>
+
  /**
-  * The abstract base class for all routed events.
-  */
-class EventSubscription final
+   * An unordered collection of event subscriptions
+   */
+class HandlerCollection final : public std::unordered_set<SubscriptionDescriptor>
 {
 public:
-	EventSubscription(HandlerCollection& collection, const SubscriptionDescriptor& descriptor) :
-		_collection(collection),
-		_descriptor(descriptor)
+	HandlerCollection() = default;
+	~HandlerCollection() = default;
+	HandlerCollection(HandlerCollection&& other) = delete;
+	HandlerCollection(const HandlerCollection& other) = delete;
+	HandlerCollection& operator=(const HandlerCollection& other) = delete;
+	HandlerCollection& operator=(HandlerCollection&& other) = delete;
+
+	template <typename TEvent>
+	void Dispatch(TEvent& event)
 	{
-
+		for (auto descriptor : *this)
+		{
+			descriptor.Dispatch(event);
+		}
 	}
-
-	~EventSubscription() = default;
-	EventSubscription(EventSubscription&& other) = delete;
-	EventSubscription(const EventSubscription& other) = default;
-	EventSubscription& operator=(const EventSubscription& other) = delete;
-	EventSubscription& operator=(EventSubscription&& other) = delete;
-
-	/// Unregisters the event subscription
-	void Unsubscribe() const
-	{
-		_collection.erase(_descriptor);
-	}
-
-private:
-	HandlerCollection& _collection;
-	const SubscriptionDescriptor& _descriptor;
 };
