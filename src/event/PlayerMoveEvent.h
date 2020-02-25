@@ -36,8 +36,7 @@
 class PlayerMoveEvent : public Event
 {
 public:
-	PlayerMoveEvent(void* sender, Player& player, int oldX, int oldY, int oldZ) :
-		Event(sender),
+	PlayerMoveEvent(Player& player, int oldX, int oldY, int oldZ) :
 		player(player),
 		oldX(oldX),
 		oldY(oldY),

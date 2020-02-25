@@ -34,34 +34,11 @@
 class Event
 {
 public:
-	/**
-	 * \brief Default constructor
-	 *
-	 * @param typeIndex The type ID of the inherited class
-	 * @param sender The sender of the event
-	 */
-	Event(void* sender) :
-		sender(sender),
-		canceled(false)
-	{
-	}
-
 
 	/**
 	 * \brief Empty virtual destructor
 	 */
 	virtual ~Event() {}
-
-
-	/**
-	 * \brief Gets the source object for this event
-	 *
-	 * @return The event sender
-	 */
-	void* getSender()
-	{
-		return sender;
-	}
 
 
 	/**
@@ -86,8 +63,7 @@ public:
 	}
 
 private:
-	void* sender;
-	bool canceled;
+	bool canceled = false;
 
 };
 

@@ -125,7 +125,7 @@ public:
 
 		// Declare a local PlayerMoveEvent and use the event bus to fire it
 		// There are currently no listeners so this won't actually do anything
-		PlayerMoveEvent e(this, player1, 0, 0, 0);
+		PlayerMoveEvent e(player1, 0, 0, 0);
 		EventBus::FireEvent(e);
 
 		// Create the player listener instance
@@ -230,7 +230,7 @@ private:
 
 		player.setPosition(x, y, z);
 
-		PlayerMoveEvent e(&player, player, savedX, savedY, savedZ);
+		PlayerMoveEvent e(player, savedX, savedY, savedZ);
 		EventBus::FireEvent(e);
 
 		if (e.getCanceled())

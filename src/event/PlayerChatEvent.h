@@ -32,7 +32,6 @@ class PlayerChatEvent : public Event
 {
 public:
 	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
-		Event(sender),
 		player(player),
 		msg(msg)
 	{
