@@ -22,11 +22,6 @@
 
 #pragma once
 
-#include <typeindex>
-#include <typeinfo>
-#include <vector>
-#include <stdexcept>
-
  /**
   * The abstract base class for all routed events.
   */

@@ -30,14 +30,14 @@
 #include <cstdio>
 #include <string>
 #include <cstdlib>
-
+#include <stdexcept>
 
 
  /**
-  * \brief Simple example of an event handler class
-  *
-  * This snippet shows how to implement multiple EventHandlers in a single class
-  */
+   * \brief Simple example of an event handler class
+   *
+   * This snippet shows how to implement multiple EventHandlers in a single class
+   */
 class PlayerListener : public EventHandler<PlayerMoveEvent>, public EventHandler<PlayerChatEvent>
 {
 public:

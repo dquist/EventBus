@@ -29,12 +29,13 @@
 #include <list>
 #include <typeinfo>
 #include <unordered_map>
+#include <typeindex>
 
 
  /**
-  * \brief An Event system that allows decoupling of code through synchronous events
-  *
-  */
+   * \brief An Event system that allows decoupling of code through synchronous events
+   *
+   */
 class EventBus
 {
 public:
