@@ -26,10 +26,11 @@
 
 #include <unordered_map>
 #include "EventSubscription.h"
+#include <typeindex>
 
  /**
-	 * An unordered map of event types to event subscription collections
-	 */
+	  * An unordered map of event types to event subscription collections
+	  */
 class HandlerCollectionMap final : public std::unordered_map<std::type_index, HandlerCollection*>
 {
 public:
@@ -60,7 +61,7 @@ public:
 		}
 
 		const EventSubscription subscription(*collection, descriptor);
-		collection->insert(descriptor);
+		collection->push_back(descriptor);
 		return subscription;
 	}
 };

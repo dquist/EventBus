@@ -22,6 +22,9 @@
 
 #pragma once
 
+#include "HandlerCollection.h"
+#include "SubscriptionDescriptor.h"
+
  /**
   * The abstract base class for all routed events.
   */
@@ -32,7 +35,6 @@ public:
 		_collection(collection),
 		_descriptor(descriptor)
 	{
-
 	}
 
 	~EventSubscription() = default;
@@ -44,7 +46,7 @@ public:
 	/// Unregisters the event subscription
 	void Unsubscribe() const
 	{
-		_collection.erase(_descriptor);
+		//_collection.remove(_descriptor); // TODO
 	}
 
 private:

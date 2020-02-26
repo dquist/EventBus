@@ -27,16 +27,15 @@
 #include "HandlerRegistration.h"
 
 #include <list>
-#include <typeinfo>
 #include <unordered_map>
 #include <typeindex>
- //#include "HandlerCollectionMap.h"
+#include "HandlerCollectionMap.h"
 
 
-  /**
-	 * \brief An Event system that allows decoupling of code through synchronous events
-	 *
-	 */
+ /**
+	* \brief An Event system that allows decoupling of code through synchronous events
+	*
+	*/
 class EventBus final
 {
 public:
@@ -143,16 +142,16 @@ public:
 		}
 	}
 
-	//EventSubscription Add(const SubscriptionDescriptor& descriptor)
-	//{
-	//	return _collectionMap.Add(descriptor);
-	//}
+	EventSubscription Add(const SubscriptionDescriptor& descriptor)
+	{
+		return _collectionMap.Add(descriptor);
+	}
 
-	//template <typename TEvent>
-	//void Publish(TEvent& event)
-	//{
-	//	_collectionMap.Dispatch(event);
-	//}
+	template <typename TEvent>
+	void Publish(TEvent& event)
+	{
+		_collectionMap.Dispatch(event);
+	}
 
 
 private:
@@ -237,7 +236,8 @@ private:
 	typedef std::unordered_map<std::type_index, std::list<EventRegistration*>*> TypeMap;
 
 	TypeMap handlers;
+	std::unordered_map<std::type_index, HandlerCollection*> _map;
 
-	//HandlerCollectionMap _collectionMap;
+	HandlerCollectionMap _collectionMap;
 
 };

@@ -24,12 +24,12 @@
 
 #include "SubscriptionDescriptor.h"
 
-#include <unordered_set>
+#include <list>
 
  /**
    * An unordered collection of event subscriptions
    */
-class HandlerCollection final : public std::unordered_set<SubscriptionDescriptor>
+class HandlerCollection final : public std::list<SubscriptionDescriptor>
 {
 public:
 	HandlerCollection() = default;

@@ -49,7 +49,7 @@ public:
 	~SubscriptionDescriptor() = default;
 
 	SubscriptionDescriptor(SubscriptionDescriptor&& other) = delete;
-	SubscriptionDescriptor(const SubscriptionDescriptor& other) = delete;
+	SubscriptionDescriptor(const SubscriptionDescriptor& other) = default;
 	SubscriptionDescriptor& operator=(const SubscriptionDescriptor& other) = delete;
 	SubscriptionDescriptor& operator=(SubscriptionDescriptor&& other) = delete;
 
@@ -61,7 +61,7 @@ public:
 
 	/// Dispatches an event to the 
 	template <typename TEvent>
-	void Dispatch(TEvent& event)
+	void Dispatch(TEvent& event) const
 	{
 		if (typeid(event) != _typeInfo)
 			throw std::runtime_error("The dispatched event type must match the event descriptor.");
