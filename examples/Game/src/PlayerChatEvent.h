@@ -22,35 +22,37 @@
 
 #pragma once
 
-#include "eventbus/RoutedEvent.h"
 #include "Player.h"
 
 #include <string>
+#include <utility>
 
 class PlayerChatEvent : public CancelableEvent
 {
 public:
-	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
-		player(player),
-		_message(msg)
+	PlayerChatEvent(Player& player, std::string msg) :
+		_player(player),
+		_message(std::move(msg))
 	{
 	}
 
 	virtual ~PlayerChatEvent() {}
 
-	Player& getPlayer()
+	[[nodiscard]]
+	const Player& GetPlayer() const
 	{
-		return player;
+		return _player;
 	}
 
-	std::string const& getMessage()
+	[[nodiscard]]
+	std::string const& GetMessage() const
 	{
 		return _message;
 	}
 
 private:
-	Player& player;
-	std::string const& _message;
+	Player& _player;
+	std::string _message;
 
 };
 

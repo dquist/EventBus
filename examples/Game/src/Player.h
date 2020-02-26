@@ -23,6 +23,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 class PlayerMoveEvent;
 
@@ -35,7 +36,7 @@ class Player
 {
 public:
 	Player(std::string name) :
-		name(name),
+		name(std::move(name)),
 		posX(0),
 		posY(0),
 		posZ(0)
@@ -47,29 +48,33 @@ public:
 
 	}
 
-	const std::string& getName()
+	[[nodiscard]]
+	const std::string& GetName() const
 	{
 		return name;
 	}
 
-	void setPosition(int x, int y, int z)
+	void SetPosition(const int x, const int y, const int z)
 	{
 		posX = x;
 		posY = y;
 		posZ = z;
 	}
 
-	int getX()
+	[[nodiscard]]
+	int GetX() const
 	{
 		return posX;
 	}
 
-	int getY()
+	[[nodiscard]]
+	int GetY() const
 	{
 		return posY;
 	}
 
-	int getZ()
+	[[nodiscard]]
+	int GetZ() const
 	{
 		return posZ;
 	}
