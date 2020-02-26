@@ -26,7 +26,6 @@
     <ClInclude Include="include\eventbus\RoutedEvent.h" />
     <ClInclude Include="include\eventbus\EventBus.h" />
     <ClInclude Include="include\eventbus\EventHandler.h" />
-    <ClInclude Include="include\eventbus\HandlerRegistration.h" />
     <ClInclude Include="include\eventbus\SubscriptionDescriptor.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

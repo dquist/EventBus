@@ -12,9 +12,6 @@
     <ClInclude Include="include\eventbus\EventHandler.h">
       <Filter>include/eventbus</Filter>
     </ClInclude>
-    <ClInclude Include="include\eventbus\HandlerRegistration.h">
-      <Filter>include/eventbus</Filter>
-    </ClInclude>
     <ClInclude Include="include\eventbus\RoutedEvent.h">
       <Filter>include/eventbus</Filter>
     </ClInclude>

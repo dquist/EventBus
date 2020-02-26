@@ -32,7 +32,7 @@ class PlayerChatEvent : public CancelableEvent
 public:
 	PlayerChatEvent(void* sender, Player& player, std::string const& msg) :
 		player(player),
-		msg(msg)
+		_message(msg)
 	{
 	}
 
@@ -45,12 +45,12 @@ public:
 
 	std::string const& getMessage()
 	{
-		return msg;
+		return _message;
 	}
 
 private:
 	Player& player;
-	std::string const& msg;
+	std::string const& _message;
 
 };
 

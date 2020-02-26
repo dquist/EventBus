@@ -52,7 +52,7 @@ public:
 	 *
 	 * @param e The PlayerMoveEvent event
 	 */
-	virtual void onEvent(PlayerMoveEvent& e) override
+	virtual void On(PlayerMoveEvent& e) override
 	{
 
 		// Ignore the event if it's already been canceled
@@ -78,7 +78,7 @@ public:
 	 *
 	 * @param e The PlayerChatEvent event
 	 */
-	virtual void onEvent(PlayerChatEvent& e) override
+	virtual void On(PlayerChatEvent& e) override
 	{
 
 		// Ignore the event if it's already been canceled
@@ -103,14 +103,6 @@ private:
 class EventBusDemo
 {
 public:
-	EventBusDemo()
-	{
-		playerMoveReg = nullptr;
-		playerChatReg = nullptr;
-	}
-
-	virtual ~EventBusDemo() {}
-
 
 	/**
 	 * Demo Function 1
@@ -126,7 +118,7 @@ public:
 		// Declare a local PlayerMoveEvent and use the event bus to fire it
 		// There are currently no listeners so this won't actually do anything
 		PlayerMoveEvent e(player1, 0, 0, 0);
-		eventBus.FireEvent(e);
+		eventBus.Publish(e);
 
 		// Create the player listener instance
 		PlayerListener playerListener;
@@ -134,12 +126,12 @@ public:
 		// Register the player listener to handler PlayerMoveEvent events
 		// Passing player1 as a second parameter means it will only listen for events from that object
 		// The return value is a HandlerRegistration pointer that can be used to unregister the event handler
-		playerMoveReg = eventBus.AddHandler<PlayerMoveEvent>(playerListener, &player1);
+		eventBus.Subscribe<PlayerMoveEvent>(playerListener);
 
 		// The playerListener gets registered again, but this time as player chat event handler
 		// The lack of a second parameter means that it will service ALL player chat events,
 		// regardless of the source
-		playerChatReg = eventBus.AddHandler<PlayerChatEvent>(playerListener);
+		eventBus.Subscribe<PlayerChatEvent>(playerListener);
 
 
 		int x = 0;
@@ -156,7 +148,7 @@ public:
 			printf("Changing player 1 X to %d\n", x);
 
 			// This method will fail once X > 500 because of the event handler we registered
-			if (setPlayerPostionWithEvent(player1, x, 0, 0) == true)
+			if (setPlayerPositionWithEvent(player1, x, 0, 0) == true)
 			{
 				x += 200;
 			}
@@ -177,7 +169,7 @@ public:
 		while (x <= 1000)
 		{
 			printf("Changing player 2 X to %d\n", x);
-			if (setPlayerPostionWithEvent(player2, x, 0, 0) == true)
+			if (setPlayerPositionWithEvent(player2, x, 0, 0) == true)
 			{
 				x += 200;
 			}
@@ -195,35 +187,21 @@ public:
 		//
 		// The event handler will print out the player name with the message when the event is fired
 		PlayerChatEvent chat1(this, player1, "Hello I am Player 1!");
-		eventBus.FireEvent(chat1);
+		eventBus.Publish(chat1);
 
 		PlayerChatEvent chat2(this, player2, "Hello I am Player 2!");
-		eventBus.FireEvent(chat2);
-
-
-		// The HandlerRegistration object can be used to unregister the event listener
-		playerChatReg->removeHandler();
+		eventBus.Publish(chat2);
 
 
 		// If a chat event is fired again, it will not be serviced since the handler has been unregistered
 		PlayerChatEvent chat3(this, player2, "This chat message will not be serviced");
-		eventBus.FireEvent(chat3);
-
-
-		// Clean up
-		playerMoveReg->removeHandler();
-		delete playerMoveReg;
-		delete playerChatReg;
+		eventBus.Publish(chat3);
 	}
 
 private:
 	EventBus eventBus;
 
-	HandlerRegistration* playerMoveReg;
-	HandlerRegistration* playerChatReg;
-
-
-	bool setPlayerPostionWithEvent(Player& player, int x, int y, int z)
+	bool setPlayerPositionWithEvent(Player& player, int x, int y, int z)
 	{
 
 		int savedX = player.getX();
@@ -233,7 +211,7 @@ private:
 		player.setPosition(x, y, z);
 
 		PlayerMoveEvent e(player, savedX, savedY, savedZ);
-		eventBus.FireEvent(e);
+		eventBus.Publish(e);
 
 		if (e.IsCanceled())
 		{
@@ -249,32 +227,32 @@ private:
 
 int main()
 {
-	EventBus eventBus;
+	//EventBus eventBus;
 
-	auto& type = typeid(PlayerMoveEvent);
-	const std::function<void(PlayerMoveEvent&)> handler = [](PlayerMoveEvent& e)
+	//auto& type = typeid(PlayerMoveEvent);
+	//const std::function<void(PlayerMoveEvent&)> handler = [](PlayerMoveEvent& e)
+	//{
+	//	printf("The player %s moved.", e.getPlayer().getName().c_str());
+	//};
+
+	//eventBus.Subscribe(handler);
+
+	//Player p("Dan");
+	//PlayerMoveEvent moveEvent(p, 0, 1, 2);
+
+	//eventBus.Publish(moveEvent);
+
+	printf("* * * EventBus Demo Program * * * \n");
+
+	try
 	{
-		printf("The player %s moved.", e.getPlayer().getName().c_str());
-	};
-
-	eventBus.Subscribe(handler);
-
-	Player p("Dan");
-	PlayerMoveEvent moveEvent(p, 0, 1, 2);
-
-	eventBus.Publish(moveEvent);
-
-	//printf("* * * EventBus Demo Program * * * \n");
-
-	//try
-	//{
-	//	EventBusDemo demo;
-	//	demo.Demo1();
-	//}
-	//catch (std::runtime_error & e)
-	//{
-	//	printf("Runtime exception: %s\n", e.what());
-	//}
+		EventBusDemo demo;
+		demo.Demo1();
+	}
+	catch (std::runtime_error & e)
+	{
+		printf("Runtime exception: %s\n", e.what());
+	}
 }
 
 
