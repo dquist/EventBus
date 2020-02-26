@@ -26,6 +26,7 @@
 
 #include <functional>
 #include <stdexcept>
+#include <utility>
 
  /**
    * A descriptor for a subscription to an event stream.
@@ -39,10 +40,10 @@ public:
 	 * @param handler A function that is called to handle a routed event
 	 * @param predicate A function used to test whether the handler should be invoked
 	 */
-	explicit SubscriptionDescriptor(const type_info& typeInfo, const std::function<void(RoutedEvent&)>& handler, const std::function<bool(RoutedEvent&)>& predicate) :
+	explicit SubscriptionDescriptor(const type_info& typeInfo, std::function<void(RoutedEvent&)> handler, std::function<bool(RoutedEvent&)> predicate) :
 		_typeInfo(typeInfo),
-		_handler(handler),
-		_predicate(predicate)
+		_handler(std::move(handler)),
+		_predicate(std::move(predicate))
 	{
 	}
 
@@ -72,6 +73,6 @@ public:
 
 private:
 	const type_info& _typeInfo;
-	const std::function<void(RoutedEvent&)>& _handler;
-	const std::function<bool(RoutedEvent&)>& _predicate;
+	std::function<void(RoutedEvent&)> _handler;
+	std::function<bool(RoutedEvent&)> _predicate;
 };

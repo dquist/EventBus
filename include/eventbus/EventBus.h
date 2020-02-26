@@ -153,6 +153,29 @@ public:
 		_collectionMap.Dispatch(event);
 	}
 
+	template <typename TEvent>
+	EventSubscription Subscribe(std::function<void(TEvent&)> handler, std::function<bool(TEvent&)> predicate)
+	{
+		const std::function<void(RoutedEvent&)> internalHandler = [=](RoutedEvent& e)
+		{
+			handler(dynamic_cast<TEvent&>(e));
+		};
+
+		const std::function<bool(RoutedEvent&)> internalPredicate = [=](RoutedEvent& e)
+		{
+			return predicate(dynamic_cast<TEvent&>(e));
+		};
+
+		const SubscriptionDescriptor descriptor(typeid(TEvent), internalHandler, internalPredicate);
+		return Add(descriptor);
+	}
+
+	template <typename TEvent>
+	EventSubscription Subscribe(std::function<void(TEvent&)> handler)
+	{
+		return Subscribe<TEvent>(handler, [](TEvent&) { return true; });
+	}
+
 
 private:
 	/**

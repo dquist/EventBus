@@ -31,6 +31,7 @@
 #include <string>
 #include <cstdlib>
 #include <stdexcept>
+#include <typeinfo>
 
 
  /**
@@ -248,17 +249,32 @@ private:
 
 int main()
 {
-	printf("* * * EventBus Demo Program * * * \n");
+	EventBus eventBus;
 
-	try
+	auto& type = typeid(PlayerMoveEvent);
+	const std::function<void(PlayerMoveEvent&)> handler = [](PlayerMoveEvent& e)
 	{
-		EventBusDemo demo;
-		demo.Demo1();
-	}
-	catch (std::runtime_error & e)
-	{
-		printf("Runtime exception: %s\n", e.what());
-	}
+		printf("The player %s moved.", e.getPlayer().getName().c_str());
+	};
+
+	eventBus.Subscribe(handler);
+
+	Player p("Dan");
+	PlayerMoveEvent moveEvent(p, 0, 1, 2);
+
+	eventBus.Publish(moveEvent);
+
+	//printf("* * * EventBus Demo Program * * * \n");
+
+	//try
+	//{
+	//	EventBusDemo demo;
+	//	demo.Demo1();
+	//}
+	//catch (std::runtime_error & e)
+	//{
+	//	printf("Runtime exception: %s\n", e.what());
+	//}
 }
 
 
